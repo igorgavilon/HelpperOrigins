@@ -1,8 +1,8 @@
 //definição do tipo de objeto que será utilizado em Array<Scientist>
-class Scientist {
-    id?: number
-    name?: string
-    bio?: string
+interface Scientist {
+    id: number
+    name: string
+    bio: string
 }
 
 //declaração do array de Objetos

@@ -1,10 +1,4 @@
 "use strict";
-//definição do tipo de objeto que será utilizado em Array<Scientist>
-var Scientist = /** @class */ (function () {
-    function Scientist() {
-    }
-    return Scientist;
-}());
 //declaração do array de Objetos
 var lista4 = new Array({ id: 1, name: "Ada Lovelace",
     bio: "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina" }, { id: 2, name: "Alan Turing",
