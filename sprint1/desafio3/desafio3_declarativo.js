@@ -14,7 +14,7 @@ var isNum = function (element) { return typeof (element) == 'number'; };
 //função que retorna o máximo, o mínimo e a média dos valores de um Array numérico
 //caso o array passado não seja numérico, retorna mensagem
 function maxMinList(list) {
-    if (Array.prototype.every.call(list, isNum)) {
+    if (isArrayNumerico(list)) {
         //retorna o valor máximo do array
         var max = list.reduce(maxValue);
         //retorna o valor mínimo do array
@@ -26,6 +26,16 @@ function maxMinList(list) {
     else {
         return 'O Array deve ser numérico!';
     }
+}
+//função auxiliar: verifica o tipo de dado
+//será utilizado na função reduce
+//´a´inicia com true, caso algum dado seja de tipo diferente de number
+//a função retornará false por causa da lógica AND (&&)
+var typeNum = function (a, b) { return a && (typeof b == 'number'); };
+//função que verifica se todos os elementos do Array é do tipo numérico
+function isArrayNumerico(lista) {
+    //caso algum dado da lista seja de tipo diferente de number, retorna false
+    return lista.reduce(typeNum, true);
 }
 //teste das funções
 var listaEntrada_1 = [10, -2, 33, true, 4, 5, 6, 0];
