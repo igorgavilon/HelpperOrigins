@@ -18,7 +18,7 @@ let lista = new Array<Scientist>(
 );
 
 //função que retorna a bio do id passado
-function getBio(id: number) {
+function getBio(id: number): string {
     //define um padrão de resposta caso não encontre um id válido
     let response = 'Nenhum id encontrado.'
     //busca entre os elementos do Array um objeto com o id
@@ -33,9 +33,9 @@ function getBio(id: number) {
 }
 
 //função que retorna o nome do id passado
-function getName(id: number) {
+function getName(id: number): string {
     //define um padrão de resposta caso não encontre um id válido
-    var response = 'Nenhum id encontrado.'
+    let response = 'Nenhum id encontrado.'
     //busca entre os elementos do Array um objeto com o id
     lista.forEach(element => {
         if(element.id == id) {
@@ -47,9 +47,9 @@ function getName(id: number) {
 }
 
 //função que remove um objeto da lista pelo id
-function deleteById(id: number) {
+function deleteById(id: number): void {
     //Array que guardará somente os objetos que não serão excluídos
-    var temporaryList = new Array<Scientist>();
+    let temporaryList = new Array<Scientist>();
     //busca pelos objetos que não serão excluídos
     //e guarda em temporaryList
     lista.forEach(element => {
@@ -63,9 +63,9 @@ function deleteById(id: number) {
 
 //função que altera o valor da propriedade 'name' ou 'bio' do id passado
 //para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
-function updateById(id: number, property: string, newValue: string) {
+function updateById(id: number, property: string, newValue: string): string {
     //resposta padrão caso não encontre um id válido
-    var response = 'Nenhum id encontrado.'
+    let response = 'Nenhum id encontrado.'
     //busca pelo elemento que será alterado
     lista.forEach(element => {
         if(element.id == id) {

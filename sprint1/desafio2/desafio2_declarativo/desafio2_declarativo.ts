@@ -22,7 +22,7 @@ let lista2 = new Array<Scientist>(
 const equalId = (id: number) => (element: Scientist) => element.id == id;
 
 //função que retorna a bio do id passado
-function getBio(id: number) {
+function getBio(id: number): string {
     //array que armazenará o resultado do filtro
     let result = new Array<Scientist>();
     //filtra o objeto com id passado para essa função
@@ -33,7 +33,7 @@ function getBio(id: number) {
 }
 
 //função que retorna o nome do id passado
-function getName(id: number) {
+function getName(id: number): string {
     //array que armazenará o resultado do filtro
     let result = new Array<Scientist>();
     //filtra o objeto com id passado para essa função
@@ -48,7 +48,7 @@ function getName(id: number) {
 const diferentId = (id: number) => (element: Scientist) => element.id != id;
 
 //função que remove um objeto da lista pelo id
-function deleteById(id: number) {
+function deleteById(id: number): void {
     //array que armazenará o resultado do filtro
     let listResult = new Array<Scientist>();
     //filtra o array e retira somente o objeto com o id passado
@@ -63,7 +63,7 @@ const alterById = (property: string, newValue: string) => (element: Scientist) =
 
 //função que altera o valor da propriedade 'name' ou 'bio' do id passado
 //para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
-function updateById(id: number, property: string, newValue: string) {
+function updateById(id: number, property: string, newValue: string): void {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     lista2.filter(equalId(id)).map(alterById(property, newValue))
 }
