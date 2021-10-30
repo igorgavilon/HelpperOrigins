@@ -66,7 +66,7 @@ const equalId = (id: number) => (element: Scientist) => element.id == id;
 //função que prepara e mostra o formulário para edição dos dados do registro selecionado
 function editarRegistro(id: number): void {
     //variável que armazena o registro selecionado pelo usuário
-    let result = new Array();
+    let result = new Array<Scientist>();
     //filtra somente o registro de interesse
     result = lista4.filter(equalId(id));
     //preenche o formulário com os valores do registro selecionado
@@ -90,9 +90,9 @@ function updateById(id: number, property: string, newValue: string): void {
 //função que realiza o update dos dados do formulário no Array lista4
 function salvarEdicao(): void {
     //busca os dados que estão no formulário
-    const id = document.getElementById('input_id').value;
-    const name = document.getElementById('input_name').value;
-    const bio = document.getElementById('textarea_bio').value;
+    const id: number = document.getElementById('input_id').value;
+    const name: string = document.getElementById('input_name').value;
+    const bio: string = document.getElementById('textarea_bio').value;
     //chama a função que atualiza
     updateById(id, 'name', name);
     updateById(id, 'bio', bio);
