@@ -1,7 +1,7 @@
 "use strict";
 /*
-    função que retorna o número de vogais em uma palavra
-    argumento requerido do tipo string
+    função que conta o número de vogais em uma palavra
+    e apresenta o resultado em um alerta na tela
 */
 function contaVogaisDoInput() {
     //fazendo uso do regex [aeiou]. "g" para percorrer toda a string
