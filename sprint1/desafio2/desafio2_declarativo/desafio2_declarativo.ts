@@ -6,7 +6,7 @@ interface Scientist {
 }
 
 //declaração do array de Objetos
-let lista2 = new Array<Scientist>(
+let lista2: Array<Scientist> = [
     {id : 1, name: "Ada Lovelace", 
         bio : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
     {id : 2, name: "Alan Turing", 
@@ -15,7 +15,7 @@ let lista2 = new Array<Scientist>(
         bio : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."},
     {id : 4, name: "Nicolau Copérnico", 
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
-);
+];
 
 //retorna true caso element.id == id passado para a função
 //será utilizado na função filter()
@@ -24,7 +24,7 @@ const equalId = (id: number) => (element: Scientist) => element.id == id;
 //função que retorna a bio do id passado
 function getBio(id: number): string {
     //array que armazenará o resultado do filtro
-    let result = new Array<Scientist>();
+    let result: Array<Scientist> = [];
     //filtra o objeto com id passado para essa função
     result = lista2.filter(equalId(id));
     //verifica se o filtro retornou algum objeto e retorna a bio
@@ -35,7 +35,7 @@ function getBio(id: number): string {
 //função que retorna o nome do id passado
 function getName(id: number): string {
     //array que armazenará o resultado do filtro
-    let result = new Array<Scientist>();
+    let result: Array<Scientist> = [];
     //filtra o objeto com id passado para essa função
     result = lista2.filter(equalId(id));
     //verifica se o filtro retornou algum objeto e retorna o name
@@ -48,13 +48,9 @@ function getName(id: number): string {
 const diferentId = (id: number) => (element: Scientist) => element.id != id;
 
 //função que remove um objeto da lista pelo id
-function deleteById(id: number): void {
-    //array que armazenará o resultado do filtro
-    let listResult = new Array<Scientist>();
+function deleteById(id: number): Scientist[] {
     //filtra o array e retira somente o objeto com o id passado
-    listResult = lista2.filter(diferentId(id));
-    //atualiza a variável lista2 após a exclusão do objeto
-    lista2 = listResult;
+    return lista2.filter(diferentId(id));
 }
 
 //função que altera o valor de uma propriedade selecionada por parâmetro
@@ -72,7 +68,7 @@ function updateById(id: number, property: string, newValue: string): void {
 console.log(getName(3));
 console.log(getBio(3));
 //deletando o id especificado
-deleteById(3);
+lista2 = deleteById(3);
 //testando se o id foi deletado
 //espera-se a seguinte resposta: id não encontrado
 console.log(getName(3));

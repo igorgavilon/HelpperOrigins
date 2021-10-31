@@ -6,7 +6,7 @@ interface Scientist {
 }
 
 //declaração do array de Objetos
-let lista = new Array<Scientist>(
+let lista: Array<Scientist> = [
     {id : 1, name: "Ada Lovelace", 
         bio : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
     {id : 2, name: "Alan Turing", 
@@ -15,17 +15,17 @@ let lista = new Array<Scientist>(
         bio : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."},
     {id : 4, name: "Nicolau Copérnico", 
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
-);
+];
 
 //função que retorna a bio do id passado
 function getBio(id: number): string {
     //define um padrão de resposta caso não encontre um id válido
-    let response = 'Nenhum id encontrado.'
+    let response: string = 'Nenhum id encontrado.'
     //busca entre os elementos do Array um objeto com o id
     lista.forEach(element => {
         if(element.id == id) {
             //caso encontre, a response será a bio
-            response = element.bio!;
+            response = element.bio;
         }
     });
     return (response);
@@ -35,12 +35,12 @@ function getBio(id: number): string {
 //função que retorna o nome do id passado
 function getName(id: number): string {
     //define um padrão de resposta caso não encontre um id válido
-    let response = 'Nenhum id encontrado.'
+    let response: string = 'Nenhum id encontrado.'
     //busca entre os elementos do Array um objeto com o id
     lista.forEach(element => {
         if(element.id == id) {
             //caso encontre, a response será o name
-            response = element.name!;
+            response = element.name;
         }
     });
     return (response);
@@ -49,7 +49,7 @@ function getName(id: number): string {
 //função que remove um objeto da lista pelo id
 function deleteById(id: number): void {
     //Array que guardará somente os objetos que não serão excluídos
-    let temporaryList = new Array<Scientist>();
+    let temporaryList: Array<Scientist> = [];
     //busca pelos objetos que não serão excluídos
     //e guarda em temporaryList
     lista.forEach(element => {
@@ -65,7 +65,7 @@ function deleteById(id: number): void {
 //para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
 function updateById(id: number, property: string, newValue: string): string {
     //resposta padrão caso não encontre um id válido
-    let response = 'Nenhum id encontrado.'
+    let response: string = 'Nenhum id encontrado.'
     //busca pelo elemento que será alterado
     lista.forEach(element => {
         if(element.id == id) {
