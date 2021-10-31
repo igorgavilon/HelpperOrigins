@@ -1,12 +1,16 @@
-//definição do tipo de objeto que será utilizado em Array<Scientist>
+/**
+ * definição do tipo de objeto que será utilizado em Array<Scientist>
+ */
 interface Scientist {
     id: number
     name: string
     bio: string
 }
 
-//declaração do array de Objetos
-let lista4 = new Array<Scientist>(
+/**
+ * declaração do array de Objetos
+ */
+let lista4: Array<Scientist> = [
     {id : 1, name: "Ada Lovelace", 
         bio : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
     {id : 2, name: "Alan Turing", 
@@ -15,17 +19,19 @@ let lista4 = new Array<Scientist>(
         bio : "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada."},
     {id : 4, name: "Nicolau Copérnico", 
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
-);
+];
 
 //define o modo de visualização: mostrar somente a tabela
 modoVisualizacao()
 //renderizar a tabela
-renderTable()
+gerarTabela()
 
-//função que monta a tabela em HTML a partir do Array lista4
-function renderTable(): void {
+/**
+ * função que monta a tabela em HTML a partir do Array lista4
+ */
+function gerarTabela(): void {
     //cria uma tabela com os resgistros
-    let html = "";
+    let html: string = "";
     html += "<h4>Listagem dos Registros</h4>";
     html += "<table border='1'>";
     html += "<tr><th scope='col'>ID</th><th scope='col'>Name</th><th scope='col'>Bio</th><th scope='col' colspan='2'>Ações</th></tr>";
@@ -45,30 +51,47 @@ function renderTable(): void {
     document.getElementById('table').innerHTML = html;
 }
 
-//função auxiliar utilizada na função filter
-const notEqualId = (id: number) => (element: Scientist) => element.id != id;
+/**
+ * função que verifica se dois id são diferentes
+ * @param id id numérico que se deseja verificar
+ * @returns true ou false, caso o id do elemento do array 
+ *          seja diferente ao parametro id ou não, respectivamente
+ */
+const diferenteId = (id: number) => (element: Scientist) => element.id != id;
 
-//função que remove um dos registros da tabela
+/**
+ * função que remove um dos registros da tabela
+ * @param id id numérico do objeto Scientist que se deseja remover da tabela
+ */
 function removeRegistro(id: number): void {
     //array que armazenará o resultado do filtro
-    let listResult = new Array<Scientist>();
+    let listResult: Array<Scientist> = [];
     //filtra o array e retira somente o objeto com o id passado
-    listResult = lista4.filter(notEqualId(id));
+    listResult = lista4.filter(diferenteId(id));
     //atualiza a variável lista2 após a exclusão do objeto
     lista4 = listResult;
     //renderiza a tabela com os dados da lista4 atualizados
-    renderTable();
+    gerarTabela();
 }
 
-//função auxiliar que será utilizada na função filter()
-const equalId = (id: number) => (element: Scientist) => element.id == id;
+/**
+ * função que verifica se dois id são iguais
+ * @param id id numérico que se deseja verificar
+ * @returns true ou false, caso o id do elemento do array 
+ *          seja igual ao parametro id ou não, respectivamente
+ */
+const igualId = (id: number) => (element: Scientist) => element.id == id;
 
-//função que prepara e mostra o formulário para edição dos dados do registro selecionado
+/**
+ * função que prepara e mostra o formulário 
+ * para edição dos dados do registro da tabela selecionado
+ * @param id id numérico do objeto Scientist que deseja editar
+ */
 function editarRegistro(id: number): void {
     //variável que armazena o registro selecionado pelo usuário
-    let result = new Array<Scientist>();
+    let result: Array<Scientist> = [];
     //filtra somente o registro de interesse
-    result = lista4.filter(equalId(id));
+    result = lista4.filter(igualId(id));
     //preenche o formulário com os valores do registro selecionado
     document.getElementById('input_id').value = id;
     document.getElementById('input_name').value = result[0].name;
@@ -77,17 +100,30 @@ function editarRegistro(id: number): void {
     modoEdicao();
 }
 
-//função que altera o valor de uma propriedade selecionada por parâmetro
-//será utilizada pela função map()
+/**
+ * função que altera o valor de uma propriedade selecionada por parâmetro
+ * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param newValue novo valor para a propriedade
+ * @returns o atributo com o seu novo valor
+ */
 const alterById = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
-//função que altera o valor da propriedade 'name' ou 'bio' do id passado
-//para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+
+/**
+ * função que altera o valor da propriedade 'name' ou 'bio' do id passado
+ * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * @param id id numérico do objeto que se deseja alterar
+ * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param newValue novo valor para a propriedade
+ */
 function updateById(id: number, property: string, newValue: string): void {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     lista4.filter(equalId(id)).map(alterById(property, newValue));
 }
 
-//função que realiza o update dos dados do formulário no Array lista4
+/**
+ * função que realiza o update dos dados do formulário no Array lista4
+ */
 function salvarEdicao(): void {
     //busca os dados que estão no formulário
     const id: number = document.getElementById('input_id').value;
@@ -99,23 +135,28 @@ function salvarEdicao(): void {
     //volta para o modo edição
     modoVisualizacao();
     //renderiza a tabela com os dados atualizados
-    renderTable();
+    gerarTabela();
 }
 
-//função que prepara a saída do modo de edição sem salvar as alterações
+/**
+ * função que prepara a saída do modo de edição sem salvar as alterações
+ */
 function cancelarEdicao(): void {
     modoVisualizacao();
 }
 
-//função que prepara para o modo de visulização: somente a tabela é mostrada
+/**
+ * função que prepara para o modo de visulização: somente a tabela é mostrada
+ */
 function modoVisualizacao(): void {
     document.getElementById('table').hidden = false;
     document.getElementById('formulario').hidden = true;
 }
 
-//função que prepara para o modo de edição: somente o formulário é mostrado
+/**
+ * função que prepara para o modo de edição: somente o formulário é mostrado
+ */
 function modoEdicao(): void {
     document.getElementById('table').hidden = true;
     document.getElementById('formulario').hidden = false;
 }
-

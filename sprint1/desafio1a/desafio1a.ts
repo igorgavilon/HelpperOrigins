@@ -1,7 +1,8 @@
-/*
-    função que retorna o número de vogais em uma palavra
-    argumento requerido do tipo string
-*/
+/**
+ * função que retorna o número de vogais em uma palavra
+ * @param palavra string de entrada
+ * @returns quantidade de vogais na string palavra
+ */
 function contaVogais(palavra: string): number {
     //fazendo uso do regex [aeiou]. "g" para percorrer toda a string
     //"i" para identificar tanto vogal  maiúscula quanto minúscula

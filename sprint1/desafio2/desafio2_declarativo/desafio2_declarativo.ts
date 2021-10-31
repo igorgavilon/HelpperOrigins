@@ -1,11 +1,15 @@
-//definição do tipo de objeto que será utilizado em Array<Scientist>
+/**
+ * definição do tipo de objeto que será utilizado em Array<Scientist>
+ */
 interface Scientist {
     id: number
     name: string
     bio: string
 }
 
-//declaração do array de Objetos
+/**
+ * declaração do array de Objetos
+ */
 let lista2: Array<Scientist> = [
     {id : 1, name: "Ada Lovelace", 
         bio : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
@@ -17,11 +21,19 @@ let lista2: Array<Scientist> = [
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
 ];
 
-//retorna true caso element.id == id passado para a função
-//será utilizado na função filter()
+/**
+ * 
+ * @param id id numérico que se deseja verificar
+ * @returns true ou false, caso o id do elemento do array 
+ *          seja igual ao parametro id ou não, respectivamente
+ */
 const equalId = (id: number) => (element: Scientist) => element.id == id;
 
-//função que retorna a bio do id passado
+/**
+ * função que retorna a bio do id passado
+ * @param id id numérico do objeto Scientist que deseja encontrar
+ * @returns o atributo bio ou uma mensagem 'id não encontrado.'
+ */
 function getBio(id: number): string {
     //array que armazenará o resultado do filtro
     let result: Array<Scientist> = [];
@@ -32,7 +44,11 @@ function getBio(id: number): string {
     return (result.length == 0 ? 'id não encontrado.' : result[0].bio);
 }
 
-//função que retorna o nome do id passado
+/**
+ * função que retorna o nome do id passado
+ * @param id id numérico do objeto Scientist que deseja encontrar
+ * @returns o atributo name ou uma mensagem 'id não encontrado.'
+ */
 function getName(id: number): string {
     //array que armazenará o resultado do filtro
     let result: Array<Scientist> = [];
@@ -43,22 +59,40 @@ function getName(id: number): string {
     return (result.length == 0 ? 'id não encontrado.' : result[0].name);
 }
 
-//retorna true caso o element.id seja diferente do id passado para a função
-//será utilizado na função filter()
+/**
+ * 
+ * @param id id numérico que se deseja verificar
+ * @returns true ou false, caso o id do elemento do array 
+ *          seja diferente ao parametro id ou não, respectivamente
+ */
 const diferentId = (id: number) => (element: Scientist) => element.id != id;
 
-//função que remove um objeto da lista pelo id
+/**
+ * função que remove um objeto da lista pelo id
+ * @param id id numérico do objeto Scientist que se deseja remover
+ * @returns array do tipo Scientist com os elementos que não foram removidos
+ */
 function deleteById(id: number): Scientist[] {
     //filtra o array e retira somente o objeto com o id passado
     return lista2.filter(diferentId(id));
 }
 
-//função que altera o valor de uma propriedade selecionada por parâmetro
-//será utilizada pela função map()
+/**
+ * função que altera o valor de uma propriedade selecionada por parâmetro
+ * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param newValue novo valor para a propriedade
+ * @returns o atributo com o seu novo valor
+ */
 const alterById = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
 
-//função que altera o valor da propriedade 'name' ou 'bio' do id passado
-//para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+/**
+ * função que altera o valor da propriedade 'name' ou 'bio' do id passado
+ * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * @param id id numérico do objeto que se deseja alterar
+ * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param newValue novo valor para a propriedade
+ */
 function updateById(id: number, property: string, newValue: string): void {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     lista2.filter(equalId(id)).map(alterById(property, newValue))
@@ -73,12 +107,8 @@ lista2 = deleteById(3);
 //espera-se a seguinte resposta: id não encontrado
 console.log(getName(3));
 
-
-
 //alterando as propriedades do id 1
 updateById(1, 'name', 'Igor Gavilon');
 updateById(1, 'bio', 'Desenvolvedor de Software');
 //imprime a lista para verificar que os dados foram realmente alterados
 console.log(lista2);
-
-

@@ -1,11 +1,22 @@
 "use strict";
-//declaração do array de Objetos
-var lista = new Array({ id: 1, name: "Ada Lovelace",
-    bio: "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina" }, { id: 2, name: "Alan Turing",
-    bio: "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificia" }, { id: 3, name: "Nikola Tesla",
-    bio: "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada." }, { id: 4, name: "Nicolau Copérnico",
-    bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." });
-//função que retorna a bio do id passado
+/**
+ * declaração do array de Objetos
+ */
+var lista = [
+    { id: 1, name: "Ada Lovelace",
+        bio: "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina" },
+    { id: 2, name: "Alan Turing",
+        bio: "Alan Turing foi um matemático, cientista da computação, lógico, criptoanalista, filósofo e biólogo teórico britânico, ele é amplamente considerado o pai da ciência da computação teórica e da inteligência artificia" },
+    { id: 3, name: "Nikola Tesla",
+        bio: "Nikola Tesla foi um inventor, engenheiro eletrotécnico e engenheiro mecânico sérvio, mais conhecido por suas contribuições ao projeto do moderno sistema de fornecimento de eletricidade em corrente alternada." },
+    { id: 4, name: "Nicolau Copérnico",
+        bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." }
+];
+/**
+ * função que retorna a bio do id passado
+ * @param id id numérico do objeto Scientist que deseja encontrar
+ * @returns o atributo bio ou uma mensagem 'Nenhum id encontrado.'
+ */
 function getBio(id) {
     //define um padrão de resposta caso não encontre um id válido
     var response = 'Nenhum id encontrado.';
@@ -18,7 +29,11 @@ function getBio(id) {
     });
     return (response);
 }
-//função que retorna o nome do id passado
+/**
+ * função que retorna o nome do id passado
+ * @param id id numérico do objeto Scientist que deseja encontrar
+ * @returns o atributo name ou uma mensagem 'Nenhum id encontrado.'
+ */
 function getName(id) {
     //define um padrão de resposta caso não encontre um id válido
     var response = 'Nenhum id encontrado.';
@@ -31,10 +46,13 @@ function getName(id) {
     });
     return (response);
 }
-//função que remove um objeto da lista pelo id
+/**
+ * função que remove um objeto da lista pelo id
+ * @param id id numérico do objeto Scientist que se deseja remover
+ */
 function deleteById(id) {
     //Array que guardará somente os objetos que não serão excluídos
-    var temporaryList = new Array();
+    var temporaryList = [];
     //busca pelos objetos que não serão excluídos
     //e guarda em temporaryList
     lista.forEach(function (element) {
@@ -45,8 +63,17 @@ function deleteById(id) {
     //atualiza a lista após a exclusão do objeto selecionado pelo id
     lista = temporaryList;
 }
-//função que altera o valor da propriedade 'name' ou 'bio' do id passado
-//para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+/**
+ * função que altera o valor da propriedade 'name' ou 'bio' do id passado
+ * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * @param id id numérico do objeto que se deseja alterar
+ * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param newValue novo valor para a propriedade
+ * @returns mensagem do status da operação realizada ou falha, podendo ser:
+ *          'Propriedade Name alterada.'
+ *          'Propriedade Bio alterada.'
+ *          'Nenhum id encontrado.'
+ */
 function updateById(id, property, newValue) {
     //resposta padrão caso não encontre um id válido
     var response = 'Nenhum id encontrado.';

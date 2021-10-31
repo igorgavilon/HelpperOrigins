@@ -1,7 +1,7 @@
-/*
-    função que conta o número de vogais em uma palavra
+/**
+ * função que conta o número de vogais em uma palavra
     e apresenta o resultado em um alerta na tela
-*/
+ */
 function contaVogaisDoInput(): void {
     //fazendo uso do regex [aeiou]. "g" para percorrer toda a string
     //"i" para identificar tanto vogal  maiúscula quanto minúscula
@@ -11,6 +11,9 @@ function contaVogaisDoInput(): void {
     alert(`Número de vogais na palavra ${palavra} é: ` + (palavra.match(/[aeiou]/gi) || []).length);
 }
 
+/**
+ * função que limpa as dados contidos no input selecionado
+ */
 function limpaInput(): void {
     document.getElementById('palavra').value = '';
 }

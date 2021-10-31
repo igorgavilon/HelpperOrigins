@@ -1,11 +1,15 @@
-//definição do tipo de objeto que será utilizado em Array<Scientist>
+/**
+ * definição do tipo de objeto que será utilizado em Array<Scientist>
+ */
 interface Scientist {
     id: number
     name: string
     bio: string
 }
 
-//declaração do array de Objetos
+/**
+ * declaração do array de Objetos
+ */
 let lista: Array<Scientist> = [
     {id : 1, name: "Ada Lovelace", 
         bio : "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina"},
@@ -17,7 +21,11 @@ let lista: Array<Scientist> = [
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
 ];
 
-//função que retorna a bio do id passado
+/**
+ * função que retorna a bio do id passado
+ * @param id id numérico do objeto Scientist que deseja encontrar
+ * @returns o atributo bio ou uma mensagem 'Nenhum id encontrado.'
+ */
 function getBio(id: number): string {
     //define um padrão de resposta caso não encontre um id válido
     let response: string = 'Nenhum id encontrado.'
@@ -32,7 +40,11 @@ function getBio(id: number): string {
     
 }
 
-//função que retorna o nome do id passado
+/**
+ * função que retorna o nome do id passado
+ * @param id id numérico do objeto Scientist que deseja encontrar
+ * @returns o atributo name ou uma mensagem 'Nenhum id encontrado.'
+ */
 function getName(id: number): string {
     //define um padrão de resposta caso não encontre um id válido
     let response: string = 'Nenhum id encontrado.'
@@ -46,7 +58,10 @@ function getName(id: number): string {
     return (response);
 }
 
-//função que remove um objeto da lista pelo id
+/**
+ * função que remove um objeto da lista pelo id
+ * @param id id numérico do objeto Scientist que se deseja remover
+ */
 function deleteById(id: number): void {
     //Array que guardará somente os objetos que não serão excluídos
     let temporaryList: Array<Scientist> = [];
@@ -61,8 +76,17 @@ function deleteById(id: number): void {
     lista = temporaryList;
 }
 
-//função que altera o valor da propriedade 'name' ou 'bio' do id passado
-//para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+/**
+ * função que altera o valor da propriedade 'name' ou 'bio' do id passado
+ * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * @param id id numérico do objeto que se deseja alterar
+ * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param newValue novo valor para a propriedade
+ * @returns mensagem do status da operação realizada ou falha, podendo ser:
+ *          'Propriedade Name alterada.'
+ *          'Propriedade Bio alterada.'
+ *          'Nenhum id encontrado.'
+ */
 function updateById(id: number, property: string, newValue: string): string {
     //resposta padrão caso não encontre um id válido
     let response: string = 'Nenhum id encontrado.'
