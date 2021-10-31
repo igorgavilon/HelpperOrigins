@@ -1,15 +1,12 @@
-// 3 - Crie uma função que receba uma lista (valide se é númerica) e retorne outra contendo:
-//   a) O maior valor;
-//   b) O menor valor;
-//   c) O valor médio.
-//  Demonstre essa função com o paradigma funcional e imperativo
-
-//função que retorna o máximo, o mínimo e a média dos valores de um Array numérico
-//caso o array passado não seja numérico, retorna mensagem
-function maxMinList(list: Array<any>): number[] | string {
-
+/**
+ * função que calcula o máximo, mínimo e a média de um valor numérico
+ * @param list array de elementos numéricos ou não
+ * @returns se o array for numérico, retorna [máximo, mínimo, média].
+ *          se o array não é numérico, retorma mensagem 'O Array deve ser numérico!'
+ */
+function maxMinList(list: Array<number | any>): number[] | string {
     if(isArrayNumerico(list)) {
-        let max, min, sum, media;
+        let max, min, sum, media: number;
         max = min = sum = list[0];
         for(var i = 1; i < list.length; i++) {
             if(list[i] > max) {
@@ -24,13 +21,15 @@ function maxMinList(list: Array<any>): number[] | string {
         return [max, min, media]
     }else {
         return 'O Array deve ser numérico!';
-    }
-
-    
+    }  
 }
 
-//função que verifica se todos os elementos do Array é do tipo numérico
-function isArrayNumerico(lista: Array<any>): boolean {
+/**
+ * função que verifica se todos os elementos do Array são do tipo numérico
+ * @param lista array de elementos numéricos ou não
+ * @returns true ou false, se o array for numérico ou não, respectivamente
+ */
+function isArrayNumerico(lista: Array<number | any>): boolean {
     for(let i = 0; i < lista.length; i++) {
         if (typeof(lista[i]) !== 'number') {
             return false;

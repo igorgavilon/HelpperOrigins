@@ -1,42 +1,47 @@
-//função que retorna sempre o maior valor entre o valor atual e o anterior do array
+/**
+ * função que compara dois valores e retorna o maior valor
+ * @param a primeiro valor
+ * @param b segundo valor
+ * @returns maior valor
+ */
 const maxValue = (a: number, b: number) => Math.max(a, b);
-//função que retorna sempre o menor valor entre o valor atual e o anterior do array
-const minValue = (a: number, b: number) => Math.min(a, b);
-//função que calcula a média de valores de um array
-//'a' é o valor do acumulador
-//'b' é o valor atual do array
-//'listaNumbers' é o array que está sendo reduzido por reduced.
-//para calcular a média basta dividir cada item do array pelo tamanho do array e depois somar todos os valoresß
-const sumValue = (a: number, b: number, index: number, listNumbers: number[]) => a + (b/listNumbers.length);
-//função que verifica se um elemento é do tipo number
-const isNum = (element: any) => typeof(element) == 'number';
 
-//função que retorna o máximo, o mínimo e a média dos valores de um Array numérico
-//caso o array passado não seja numérico, retorna mensagem
-function maxMinList(list: Array<any>): number[] | string {
-    if(isArrayNumerico(list)) {
+/**
+ * função que compara dois valores e retorna o menor valor
+ * @param a primeiro valor
+ * @param b segundo valor
+ * @returns menor valor
+ */
+const minValue = (a: number, b: number) => Math.min(a, b);
+
+/**
+ * função que calcula a média de valores de um array
+ * @param a é o valor do acumulador
+ * @param b é o valor atual do array
+ * @param index é o índice atual do array
+ * @param listNumbers é o array que está sendo reduzido por reduced
+ * @returns média do valores
+ */
+const sumValue = (a: number, b: number, index: number, listNumbers: number[]) => a + (b/listNumbers.length);
+
+/**
+ * função que calcula o máximo, mínimo e a média de um valor numérico
+ * @param list array de elementos numéricos ou não
+ * @returns se o array for numérico, retorna [máximo, mínimo, média].
+ *          se o array não é numérico, retorma mensagem 'O Array deve ser numérico!'
+ */
+function maxMinList(list: Array<number | any>): number[] | string {
+    if(list.every((element: any) => typeof element == 'number')) {
         //retorna o valor máximo do array
-        let max = list.reduce(maxValue);
+        let max: number = list.reduce(maxValue);
         //retorna o valor mínimo do array
-        let min = list.reduce(minValue);
+        let min: number = list.reduce(minValue);
         //retorna a média dos valores do array
-        let media = list.reduce(sumValue, 0);
+        let media: number = list.reduce(sumValue, 0);
         return [max, min, media]; 
     }else {
         return 'O Array deve ser numérico!';
     } 
-}
-
-//função auxiliar: verifica o tipo de dado
-//será utilizado na função reduce
-//´a´inicia com true, caso algum dado seja de tipo diferente de number
-//a função retornará false por causa da lógica AND (&&)
-const typeNum = (a: any, b: any) => a && (typeof b == 'number');
-
-//função que verifica se todos os elementos do Array é do tipo numérico
-function isArrayNumerico(lista: Array<any>): boolean {
-    //caso algum dado da lista seja de tipo diferente de number, retorna false
-    return lista.reduce(typeNum, true);
 }
 
 //teste das funções
