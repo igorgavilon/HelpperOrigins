@@ -22,22 +22,31 @@ let lista: Array<Scientist> = [
 ];
 
 /**
+ * função que retorna um elemento do array pelo id
+ * @param list array de objetos Scientist
+ * @param id id que deseja encontrar
+ * @returns elemento que corresponde ao id passado ou null, caso não encontre
+ */
+function elementById(list: Array<Scientist>, id: number): Scientist | null {
+    for(const element of list){
+        if(element.id == id) {
+            return element;
+        }   
+    }
+    return null
+}
+
+/**
  * função que retorna a bio do id passado
  * @param id id numérico do objeto Scientist que deseja encontrar
  * @returns o atributo bio ou uma mensagem 'Nenhum id encontrado.'
  */
 function getBio(id: number): string {
-    //define um padrão de resposta caso não encontre um id válido
-    let response: string = 'Nenhum id encontrado.'
+    //variável de resposta
+    let response: Scientist | null;
     //busca entre os elementos do Array um objeto com o id
-    lista.forEach(element => {
-        if(element.id == id) {
-            //caso encontre, a response será a bio
-            response = element.bio;
-        }
-    });
-    return (response);
-    
+    response = elementById(lista, id);
+    return (response == null ? 'Nenhum id encontrado.' : response.bio);
 }
 
 /**
@@ -46,16 +55,11 @@ function getBio(id: number): string {
  * @returns o atributo name ou uma mensagem 'Nenhum id encontrado.'
  */
 function getName(id: number): string {
-    //define um padrão de resposta caso não encontre um id válido
-    let response: string = 'Nenhum id encontrado.'
+    //variável de resposta
+    let response: Scientist | null;
     //busca entre os elementos do Array um objeto com o id
-    lista.forEach(element => {
-        if(element.id == id) {
-            //caso encontre, a response será o name
-            response = element.name;
-        }
-    });
-    return (response);
+    response = elementById(lista, id);
+    return (response == null ? 'Nenhum id encontrado.' : response.name);
 }
 
 /**

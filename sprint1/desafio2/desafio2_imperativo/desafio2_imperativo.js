@@ -13,21 +13,31 @@ var lista = [
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." }
 ];
 /**
+ * função que retorna um elemento do array pelo id
+ * @param list array de objetos Scientist
+ * @param id id que deseja encontrar
+ * @returns elemento que corresponde ao id passado ou null, caso não encontre
+ */
+function elementById(list, id) {
+    for (var _i = 0, list_1 = list; _i < list_1.length; _i++) {
+        var element = list_1[_i];
+        if (element.id == id) {
+            return element;
+        }
+    }
+    return null;
+}
+/**
  * função que retorna a bio do id passado
  * @param id id numérico do objeto Scientist que deseja encontrar
  * @returns o atributo bio ou uma mensagem 'Nenhum id encontrado.'
  */
 function getBio(id) {
-    //define um padrão de resposta caso não encontre um id válido
-    var response = 'Nenhum id encontrado.';
+    //variável de resposta
+    var response;
     //busca entre os elementos do Array um objeto com o id
-    lista.forEach(function (element) {
-        if (element.id == id) {
-            //caso encontre, a response será a bio
-            response = element.bio;
-        }
-    });
-    return (response);
+    response = elementById(lista, id);
+    return (response == null ? 'Nenhum id encontrado.' : response.bio);
 }
 /**
  * função que retorna o nome do id passado
@@ -35,16 +45,11 @@ function getBio(id) {
  * @returns o atributo name ou uma mensagem 'Nenhum id encontrado.'
  */
 function getName(id) {
-    //define um padrão de resposta caso não encontre um id válido
-    var response = 'Nenhum id encontrado.';
+    //variável de resposta
+    var response;
     //busca entre os elementos do Array um objeto com o id
-    lista.forEach(function (element) {
-        if (element.id == id) {
-            //caso encontre, a response será o name
-            response = element.name;
-        }
-    });
-    return (response);
+    response = elementById(lista, id);
+    return (response == null ? 'Nenhum id encontrado.' : response.name);
 }
 /**
  * função que remove um objeto da lista pelo id
