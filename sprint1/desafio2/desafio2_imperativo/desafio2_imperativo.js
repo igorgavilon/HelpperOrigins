@@ -81,13 +81,13 @@ function updateById(id, property, newValue) {
     lista.forEach(function (element) {
         if (element.id == id) {
             //verifica qual propriedade deve ser alterada
-            if (property == 'name') {
-                element.name = newValue;
-                response = 'Propriedade Name alterada.';
+            //previne que o usuário tente alterar uma propriedade que não existe
+            if (property == 'name' || property == 'bio') {
+                element[property] = newValue;
+                response = "Propriedade \"" + property + "\" alterada.";
             }
-            else if (property == 'bio') {
-                element.bio = newValue;
-                response = 'Propriedade Bio alterada.';
+            else {
+                response = 'Propriedade não existente.';
             }
         }
     });

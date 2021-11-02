@@ -27,34 +27,44 @@ let lista2: Array<Scientist> = [
  * @returns true ou false, caso o id do elemento do array 
  *          seja igual ao parametro id ou não, respectivamente
  */
-const equalId = (id: number) => (element: Scientist) => element.id == id;
+const equalId = (id: number) => (element: Scientist) => element.id === id;
+
+/**
+ * 
+ * @param list lista de objetos Scientist
+ * @param id id do objeto que deseja encontrar
+ * @returns array com o objeto cujo id foi informado ou []
+ */
+const findById = (list: Array<Scientist>, id: number) => list.filter(equalId(id));
 
 /**
  * função que retorna a bio do id passado
+ * @param list lista com os objetos Scientist
  * @param id id numérico do objeto Scientist que deseja encontrar
  * @returns o atributo bio ou uma mensagem 'id não encontrado.'
  */
-function getBio(id: number): string {
+function getBio(list: Array<Scientist>, id: number): string {
     //array que armazenará o resultado do filtro
     let result: Array<Scientist> = [];
-    //filtra o objeto com id passado para essa função
-    result = lista2.filter(equalId(id));
-    //verifica se o filtro retornou algum objeto e retorna a bio
+    //busca o objeto pelo id passado
+    result = findById(list, id);
+    //verifica se retornou algum objeto e retorna a bio
     //senão o id não foi encontrado
     return (result.length == 0 ? 'id não encontrado.' : result[0].bio);
 }
 
 /**
  * função que retorna o nome do id passado
+ * @param list lista com os objetos Scientist
  * @param id id numérico do objeto Scientist que deseja encontrar
  * @returns o atributo name ou uma mensagem 'id não encontrado.'
  */
-function getName(id: number): string {
+function getName(list: Array<Scientist>, id: number): string {
     //array que armazenará o resultado do filtro
     let result: Array<Scientist> = [];
-    //filtra o objeto com id passado para essa função
-    result = lista2.filter(equalId(id));
-    //verifica se o filtro retornou algum objeto e retorna o name
+    //busca o objeto pelo id passado
+    result = findById(list, id);
+    //verifica se retornou algum objeto e retorna o name
     //senão o id não foi encontrado
     return (result.length == 0 ? 'id não encontrado.' : result[0].name);
 }
@@ -69,12 +79,13 @@ const diferentId = (id: number) => (element: Scientist) => element.id != id;
 
 /**
  * função que remove um objeto da lista pelo id
+ * @param list lista com os objetos Scientist
  * @param id id numérico do objeto Scientist que se deseja remover
  * @returns array do tipo Scientist com os elementos que não foram removidos
  */
-function deleteById(id: number): Scientist[] {
+function deleteById(list: Array<Scientist>, id: number): Scientist[] {
     //filtra o array e retira somente o objeto com o id passado
-    return lista2.filter(diferentId(id));
+    return list.filter(diferentId(id));
 }
 
 /**
@@ -84,31 +95,41 @@ function deleteById(id: number): Scientist[] {
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
-const alterById = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
+const alterProperty = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
 
 /**
- * função que altera o valor da propriedade 'name' ou 'bio' do id passado
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * função que altera a propriedade "name" ou "bio" do objeto selecionado pelo id
+ * @param list lista com os objetos Scientist
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
+ * @returns array do tipo Scientist contendo o item que foi atualizado
  */
-function updateById(id: number, property: string, newValue: string): void {
+function updateById(list: Array<Scientist>, id: number, property: string, newValue: string): Array<Scientist> {
+    //array de cópia do array de entrada, list
+    //retirando a referência de memória com: JSON.parse(JSON.stringify(list))
+    //garantindo a imutabilidade do parâmetro passaddo lista2
+    let auxiliarList: Array<Scientist> = JSON.parse(JSON.stringify(list));
+
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
-    lista2.filter(equalId(id)).map(alterById(property, newValue))
+    auxiliarList.filter(equalId(id)).map(alterProperty(property, newValue));
+    return auxiliarList;
 }
 
 //realizando buscas para o id especificado
-console.log(getName(3));
-console.log(getBio(3));
-//deletando o id especificado
-lista2 = deleteById(3);
-//testando se o id foi deletado
+console.log(getName(lista2, 3));
+console.log(getBio(lista2, 3));
+
+//deletando o objeto pelo id especificado
+console.log(deleteById(lista2, 3));
+
+//testando a remoção de objeto de um id que não existe
 //espera-se a seguinte resposta: id não encontrado
-console.log(getName(3));
+console.log(getName(lista2, 30));
 
 //alterando as propriedades do id 1
-updateById(1, 'name', 'Igor Gavilon');
-updateById(1, 'bio', 'Desenvolvedor de Software');
-//imprime a lista para verificar que os dados foram realmente alterados
+console.log(updateById(lista2, 1, 'name', 'Igor Gavilon'));
+console.log(updateById(lista2, 1, 'bio', 'Desenvolvedor de Software.'));
+
+//imprime a lista original para verificar que os dados não foram alterados
 console.log(lista2);
