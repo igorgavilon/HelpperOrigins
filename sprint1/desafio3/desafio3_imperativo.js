@@ -6,20 +6,20 @@
  *          se o array não é numérico, retorma mensagem 'O Array deve ser numérico!'
  */
 function maxMinList(list) {
-    if (isArrayNumerico(list)) {
-        var max = void 0, min = void 0, sum = void 0, media = void 0;
+    if (list.length != 0 && isArrayNumeric(list)) {
+        var max = void 0, min = void 0, sum = void 0, mean = void 0;
         max = min = sum = list[0];
-        for (var i = 1; i < list.length; i++) {
-            if (list[i] > max) {
-                max = list[i];
+        for (var index = 1; index < list.length; index++) {
+            if (list[index] > max) {
+                max = list[index];
             }
-            if (list[i] < min) {
-                min = list[i];
+            if (list[index] < min) {
+                min = list[index];
             }
-            sum += list[i];
+            sum += list[index];
         }
-        media = sum / list.length;
-        return [max, min, media];
+        mean = sum / list.length;
+        return [max, min, mean];
     }
     else {
         return 'O Array deve ser numérico!';
@@ -27,21 +27,23 @@ function maxMinList(list) {
 }
 /**
  * função que verifica se todos os elementos do Array são do tipo numérico
- * @param lista array de elementos numéricos ou não
+ * @param list array de elementos numéricos ou não
  * @returns true ou false, se o array for numérico ou não, respectivamente
  */
-function isArrayNumerico(lista) {
-    for (var i = 0; i < lista.length; i++) {
-        if (typeof (lista[i]) !== 'number') {
+function isArrayNumeric(list) {
+    for (var index = 0; index < list.length; index++) {
+        if (typeof (list[index]) !== 'number') {
             return false;
         }
     }
     return true;
 }
 //teste das funções
-var listaEntrada = [10, -2, 33, true, 4, 5, 6, 0];
+var listEntry1 = [10, -2, 33, true, 4, 5, 6, 0];
 //deve retornar a mensagem: O Array deve ser numérico!
-console.log(maxMinList(listaEntrada));
-var listaEntrada2 = [10, -2, 33, 4, 5, 6, 0];
+console.log(maxMinList(listEntry1));
+var listEntry2 = [10, -2, 33, 4, 5, 6, 0];
 //deve retornar o máximo, o mínimo e a média dos valores
-console.log(maxMinList(listaEntrada2));
+console.log(maxMinList(listEntry2));
+//deve retornar a mensagem: O Array deve ser numérico!
+console.log(maxMinList([]));
