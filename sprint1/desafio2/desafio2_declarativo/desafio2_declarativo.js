@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 /**
  * declaração do array de Objetos
  */
@@ -91,9 +102,9 @@ var alterProperty = function (property, newValue) { return function (element) { 
  */
 function updateById(list, id, property, newValue) {
     //array de cópia do array de entrada, list
-    //retirando a referência de memória com: JSON.parse(JSON.stringify(list))
+    //retirando a referência de memória com: list.map(element => {return {...element}})
     //garantindo a imutabilidade do parâmetro passaddo lista2
-    var auxiliarList = JSON.parse(JSON.stringify(list));
+    var auxiliarList = list.map(function (element) { return __assign({}, element); });
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     auxiliarList.filter(equalId(id)).map(alterProperty(property, newValue));
     return auxiliarList;

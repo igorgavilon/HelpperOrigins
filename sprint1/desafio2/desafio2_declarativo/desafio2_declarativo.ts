@@ -107,9 +107,9 @@ const alterProperty = (property: string, newValue: string) => (element: Scientis
  */
 function updateById(list: Array<Scientist>, id: number, property: string, newValue: string): Array<Scientist> {
     //array de cópia do array de entrada, list
-    //retirando a referência de memória com: JSON.parse(JSON.stringify(list))
+    //retirando a referência de memória com: list.map(element => {return {...element}})
     //garantindo a imutabilidade do parâmetro passaddo lista2
-    let auxiliarList: Array<Scientist> = JSON.parse(JSON.stringify(list));
+    let auxiliarList: Array<Scientist> = list.map(element => {return {...element}});
 
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     auxiliarList.filter(equalId(id)).map(alterProperty(property, newValue));
