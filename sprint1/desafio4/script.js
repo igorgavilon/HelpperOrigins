@@ -1,5 +1,21 @@
 "use strict";
 /**
+ * variável que armazena os modos que o usuário pode interagir
+ */
+var modo;
+(function (modo) {
+    modo["edicao"] = "edicao";
+    modo["visualizacao"] = "visualizacao";
+})(modo || (modo = {}));
+/**
+ * enum que contém as propriedades do objeto que podem ser alteradas
+ */
+var propriedadeObjeto;
+(function (propriedadeObjeto) {
+    propriedadeObjeto["name"] = "name";
+    propriedadeObjeto["bio"] = "bio";
+})(propriedadeObjeto || (propriedadeObjeto = {}));
+/**
  * declaração do array de Objetos
  */
 var lista4 = [
@@ -21,34 +37,39 @@ var tabelaHTML = document.querySelector("table");
  */
 var rotulosTabela = Object.keys(lista4[0]);
 /**
- * define o modo de visualização: mostrar somente a tabela
+ * função que realiza a configuração inicial quando a página é carregada: HTML onload()
  */
-modoVisualizacao();
-/**
- * renderizar a tabela
- */
-gerarTabela();
+function configuracaoInicial() {
+    /**
+     * define o modo de visualização: mostrar somente a tabela
+     */
+    definirModo(modo.visualizacao);
+    /**
+     * renderizar a tabela
+     */
+    gerarTabela();
+}
 /**
  * função que gera o cabeçalho da tabela
  * @param tabela referencia da tabela HTML
  * @param rotulos rótulos dos dados da tabela
  */
 function gerarCabecalhoTabela(tabela, rotulos) {
-    var thead = tabela.createTHead();
-    var row = thead.insertRow();
+    var cabecalhoTabela = tabela.createTHead();
+    var linha = cabecalhoTabela.insertRow();
     for (var _i = 0, rotulos_1 = rotulos; _i < rotulos_1.length; _i++) {
         var chave = rotulos_1[_i];
-        var th_1 = document.createElement("th");
-        var text_1 = document.createTextNode(chave);
-        th_1.appendChild(text_1);
-        row.appendChild(th_1);
+        var elemento_th_1 = document.createElement("th");
+        var texto_1 = document.createTextNode(chave);
+        elemento_th_1.appendChild(texto_1);
+        linha.appendChild(elemento_th_1);
     }
     //criando a coluna ações: editar e excluir
-    var th = document.createElement("th");
-    var text = document.createTextNode('ações');
-    th.setAttribute("colSpan", "2");
-    th.appendChild(text);
-    row.appendChild(th);
+    var elemento_th = document.createElement("th");
+    var texto = document.createTextNode('ações');
+    elemento_th.setAttribute("colSpan", "2");
+    elemento_th.appendChild(texto);
+    linha.appendChild(elemento_th);
     tabela.setAttribute("border", "2");
 }
 /**
@@ -59,27 +80,27 @@ function gerarCabecalhoTabela(tabela, rotulos) {
 function gerarLinhasTabela(tabela, dados) {
     for (var _i = 0, dados_1 = dados; _i < dados_1.length; _i++) {
         var elemento = dados_1[_i];
-        var row = tabela.insertRow();
+        var linha = tabela.insertRow();
         for (var chave in elemento) {
-            var cell_1 = row.insertCell();
-            var text_2 = document.createTextNode(elemento[chave]);
-            cell_1.appendChild(text_2);
+            var celula_1 = linha.insertCell();
+            var texto_2 = document.createTextNode(elemento[chave]);
+            celula_1.appendChild(texto_2);
         }
         //inserir as ações editar e excluir
-        var cell = row.insertCell();
-        var link = document.createElement('a');
-        var text = document.createTextNode('editar');
-        link.appendChild(text);
-        link.setAttribute("href", "#");
-        link.setAttribute("onClick", "editarRegistro(" + elemento.id + ")");
-        cell.appendChild(link);
-        var cell = row.insertCell();
-        var link = document.createElement('a');
-        var text = document.createTextNode('excluir');
-        link.appendChild(text);
-        link.setAttribute("href", "#");
-        link.setAttribute("onClick", "removeRegistro(" + elemento.id + ")");
-        cell.appendChild(link);
+        var celula = linha.insertCell();
+        var elemento_a = document.createElement('a');
+        var texto = document.createTextNode('editar');
+        elemento_a.appendChild(texto);
+        elemento_a.setAttribute("href", "#");
+        elemento_a.setAttribute("onClick", "editarRegistro(" + elemento.id + ")");
+        celula.appendChild(elemento_a);
+        var celula = linha.insertCell();
+        var elemento_a = document.createElement('a');
+        var texto = document.createTextNode('excluir');
+        elemento_a.appendChild(texto);
+        elemento_a.setAttribute("href", "#");
+        elemento_a.setAttribute("onClick", "removeRegistro(" + elemento.id + ")");
+        celula.appendChild(elemento_a);
     }
 }
 /**
@@ -104,8 +125,8 @@ function atualizarTabela() {
  */
 function limparTabela() {
     //remover todas as linhas da tabela da tabela
-    document.querySelectorAll("table tr").forEach(function (e) {
-        e.remove();
+    tabelaHTML.querySelectorAll("tr").forEach(function (elemento) {
+        elemento.remove();
     });
 }
 /**
@@ -150,8 +171,8 @@ function editarRegistro(id) {
     document.getElementById('input_id').value = id;
     document.getElementById('input_name').value = result[0].name;
     document.getElementById('textarea_bio').value = result[0].bio;
-    //entra em modo de edição
-    modoEdicao();
+    //entra em modo de edição: mostra o formulário e esconde a tabela
+    definirModo(modo.edicao);
 }
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
@@ -180,11 +201,11 @@ function salvarEdicao() {
     var id = document.getElementById('input_id').value;
     var name = document.getElementById('input_name').value;
     var bio = document.getElementById('textarea_bio').value;
-    //chama a função que atualiza
-    alteraPropriedadePeloId(id, 'name', name);
-    alteraPropriedadePeloId(id, 'bio', bio);
-    //volta para o modo edição
-    modoVisualizacao();
+    //chama a função que atualiza a propriedade do objeto alterado
+    alteraPropriedadePeloId(id, propriedadeObjeto.name, name);
+    alteraPropriedadePeloId(id, propriedadeObjeto.bio, bio);
+    //volta para o modo visualização
+    definirModo(modo.visualizacao);
     //renderiza a tabela com os dados da lista4 atualizados
     atualizarTabela();
 }
@@ -192,19 +213,14 @@ function salvarEdicao() {
  * função que prepara a saída do modo de edição sem salvar as alterações
  */
 function cancelarEdicao() {
-    modoVisualizacao();
+    //volta para o modo visualização
+    definirModo(modo.visualizacao);
 }
 /**
- * função que prepara para o modo de visulização: somente a tabela é mostrada
+ * função que define o modo que o usuário terá acesso
+ * @param modo enum type: modo que o usuário terá acesso: edição ou visualização dos dados
  */
-function modoVisualizacao() {
-    document.getElementById('table').hidden = false;
-    document.getElementById('formulario').hidden = true;
-}
-/**
- * função que prepara para o modo de edição: somente o formulário é mostrado
- */
-function modoEdicao() {
-    document.getElementById('table').hidden = true;
-    document.getElementById('formulario').hidden = false;
+function definirModo(modo) {
+    document.getElementById('table').hidden = (modo === "edicao");
+    document.getElementById('formulario').hidden = (modo === "visualizacao");
 }

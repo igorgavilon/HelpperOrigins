@@ -8,6 +8,22 @@ interface Scientist {
 }
 
 /**
+ * variável que armazena os modos que o usuário pode interagir
+ */
+enum modo {
+    edicao = "edicao",
+    visualizacao = "visualizacao"
+}
+
+/**
+ * enum que contém as propriedades do objeto que podem ser alteradas
+ */
+enum propriedadeObjeto {
+    name = "name",
+    bio = "bio"
+}
+
+/**
  * declaração do array de Objetos
  */
 let lista4: Array<Scientist> = [
@@ -31,13 +47,20 @@ let tabelaHTML: HTMLTableElement = document.querySelector("table");
 let rotulosTabela: string[] = Object.keys(lista4[0]);
 
 /**
- * define o modo de visualização: mostrar somente a tabela
+ * função que realiza a configuração inicial quando a página é carregada: HTML onload()
  */
-modoVisualizacao()
-/**
- * renderizar a tabela
- */
-gerarTabela()
+function configuracaoInicial(): void {
+    /**
+     * define o modo de visualização: mostrar somente a tabela
+     */
+    definirModo(modo.visualizacao);
+    /**
+     * renderizar a tabela
+     */
+    gerarTabela();
+}
+
+
 
 /**
  * função que gera o cabeçalho da tabela
@@ -45,21 +68,21 @@ gerarTabela()
  * @param rotulos rótulos dos dados da tabela
  */
 function gerarCabecalhoTabela(tabela: HTMLTableElement, rotulos: string[]): void {
-    let thead: HTMLTableSectionElement = tabela.createTHead();
-    let row: HTMLTableRowElement = thead.insertRow();
+    let cabecalhoTabela: HTMLTableSectionElement = tabela.createTHead();
+    let linha: HTMLTableRowElement = cabecalhoTabela.insertRow();
     for (let chave of rotulos) {
-      let th: HTMLTableCellElement = document.createElement("th");
-      let text: Text = document.createTextNode(chave);
-      th.appendChild(text);
-      row.appendChild(th);
+      let elemento_th: HTMLTableCellElement = document.createElement("th");
+      let texto: Text = document.createTextNode(chave);
+      elemento_th.appendChild(texto);
+      linha.appendChild(elemento_th);
     }
 
     //criando a coluna ações: editar e excluir
-    let th: HTMLTableCellElement = document.createElement("th");
-    let text: Text = document.createTextNode('ações');
-    th.setAttribute("colSpan", "2");
-    th.appendChild(text);
-    row.appendChild(th);
+    let elemento_th: HTMLTableCellElement = document.createElement("th");
+    let texto: Text = document.createTextNode('ações');
+    elemento_th.setAttribute("colSpan", "2");
+    elemento_th.appendChild(texto);
+    linha.appendChild(elemento_th);
     tabela.setAttribute("border", "2");
 }
 
@@ -70,28 +93,28 @@ function gerarCabecalhoTabela(tabela: HTMLTableElement, rotulos: string[]): void
  */
 function gerarLinhasTabela(tabela: HTMLTableElement, dados: Array<Scientist>): void {
     for (let elemento of dados) {
-        let row: HTMLTableRowElement = tabela.insertRow();
+        let linha: HTMLTableRowElement = tabela.insertRow();
         for (let chave in elemento) {
-            let cell: HTMLTableCellElement = row.insertCell();
-            let text: Text = document.createTextNode(elemento[chave]);
-            cell.appendChild(text);
+            let celula: HTMLTableCellElement = linha.insertCell();
+            let texto: Text = document.createTextNode(elemento[chave]);
+            celula.appendChild(texto);
         }
 
         //inserir as ações editar e excluir
-        let cell: HTMLTableCellElement = row.insertCell();
-        let link: HTMLAnchorElement = document.createElement('a');
-        let text: Text = document.createTextNode('editar');
-        link.appendChild(text);
-        link.setAttribute("href", "#");
-        link.setAttribute("onClick",`editarRegistro(${elemento.id})` );
-        cell.appendChild(link);
-        let cell: HTMLTableCellElement = row.insertCell();
-        let link: HTMLAnchorElement = document.createElement('a');
-        let text: Text = document.createTextNode('excluir');
-        link.appendChild(text);
-        link.setAttribute("href", "#");
-        link.setAttribute("onClick",`removeRegistro(${elemento.id})` );
-        cell.appendChild(link);
+        let celula: HTMLTableCellElement = linha.insertCell();
+        let elemento_a: HTMLAnchorElement = document.createElement('a');
+        let texto: Text = document.createTextNode('editar');
+        elemento_a.appendChild(texto);
+        elemento_a.setAttribute("href", "#");
+        elemento_a.setAttribute("onClick",`editarRegistro(${elemento.id})` );
+        celula.appendChild(elemento_a);
+        let celula: HTMLTableCellElement = linha.insertCell();
+        let elemento_a: HTMLAnchorElement = document.createElement('a');
+        let texto: Text = document.createTextNode('excluir');
+        elemento_a.appendChild(texto);
+        elemento_a.setAttribute("href", "#");
+        elemento_a.setAttribute("onClick",`removeRegistro(${elemento.id})` );
+        celula.appendChild(elemento_a);
     }
 }
 
@@ -119,8 +142,8 @@ function atualizarTabela(): void {
  */
 function limparTabela(): void {
     //remover todas as linhas da tabela da tabela
-    document.querySelectorAll("table tr").forEach(e => {
-        e.remove()
+    tabelaHTML.querySelectorAll("tr").forEach(elemento => {
+        elemento.remove()
     });
 }
 
@@ -170,8 +193,8 @@ function editarRegistro(id: number): void {
     document.getElementById('input_id').value = id;
     document.getElementById('input_name').value = result[0].name;
     document.getElementById('textarea_bio').value = result[0].bio;
-    //entra em modo de edição
-    modoEdicao();
+    //entra em modo de edição: mostra o formulário e esconde a tabela
+    definirModo(modo.edicao);
 }
 
 /**
@@ -181,7 +204,7 @@ function editarRegistro(id: number): void {
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
-const alteraPropriedade = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
+const alteraPropriedade = (property: propriedadeObjeto, newValue: string) => (element: Scientist) => element[property] = newValue;
 
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
@@ -190,7 +213,7 @@ const alteraPropriedade = (property: string, newValue: string) => (element: Scie
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  */
-function alteraPropriedadePeloId(id: number, property: string, newValue: string): void {
+function alteraPropriedadePeloId(id: number, property: propriedadeObjeto, newValue: string): void {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     lista4.filter(igualId(id)).map(alteraPropriedade(property, newValue));
 }
@@ -203,11 +226,11 @@ function salvarEdicao(): void {
     const id: number = document.getElementById('input_id').value;
     const name: string = document.getElementById('input_name').value;
     const bio: string = document.getElementById('textarea_bio').value;
-    //chama a função que atualiza
-    alteraPropriedadePeloId(id, 'name', name);
-    alteraPropriedadePeloId(id, 'bio', bio);
-    //volta para o modo edição
-    modoVisualizacao();
+    //chama a função que atualiza a propriedade do objeto alterado
+    alteraPropriedadePeloId(id, propriedadeObjeto.name, name);
+    alteraPropriedadePeloId(id, propriedadeObjeto.bio, bio);
+    //volta para o modo visualização
+    definirModo(modo.visualizacao);
     
     //renderiza a tabela com os dados da lista4 atualizados
     atualizarTabela();
@@ -217,21 +240,15 @@ function salvarEdicao(): void {
  * função que prepara a saída do modo de edição sem salvar as alterações
  */
 function cancelarEdicao(): void {
-    modoVisualizacao();
+    //volta para o modo visualização
+    definirModo(modo.visualizacao);
 }
 
 /**
- * função que prepara para o modo de visulização: somente a tabela é mostrada
+ * função que define o modo que o usuário terá acesso
+ * @param modo enum type: modo que o usuário terá acesso: edição ou visualização dos dados
  */
-function modoVisualizacao(): void {
-    document.getElementById('table').hidden = false;
-    document.getElementById('formulario').hidden = true;
-}
-
-/**
- * função que prepara para o modo de edição: somente o formulário é mostrado
- */
-function modoEdicao(): void {
-    document.getElementById('table').hidden = true;
-    document.getElementById('formulario').hidden = false;
+function definirModo(modo: modo): void {
+    document.getElementById('table').hidden = (modo === "edicao");
+    document.getElementById('formulario').hidden = (modo === "visualizacao");
 }
