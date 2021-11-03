@@ -21,34 +21,107 @@ let lista4: Array<Scientist> = [
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar."}
 ];
 
-//define o modo de visualização: mostrar somente a tabela
+/**
+ * variável que armazena a referência da tabela do HTML
+ */
+let tabelaHTML: HTMLTableElement = document.querySelector("table");
+/**
+ * variável que armazena os rótulos dos dados da tabela
+ */
+let rotulosTabela: string[] = Object.keys(lista4[0]);
+
+/**
+ * define o modo de visualização: mostrar somente a tabela
+ */
 modoVisualizacao()
-//renderizar a tabela
+/**
+ * renderizar a tabela
+ */
 gerarTabela()
+
+/**
+ * função que gera o cabeçalho da tabela
+ * @param tabela referencia da tabela HTML
+ * @param rotulos rótulos dos dados da tabela
+ */
+function gerarCabecalhoTabela(tabela: HTMLTableElement, rotulos: string[]): void {
+    let thead: HTMLTableSectionElement = tabela.createTHead();
+    let row: HTMLTableRowElement = thead.insertRow();
+    for (let chave of rotulos) {
+      let th: HTMLTableCellElement = document.createElement("th");
+      let text: Text = document.createTextNode(chave);
+      th.appendChild(text);
+      row.appendChild(th);
+    }
+
+    //criando a coluna ações: editar e excluir
+    let th: HTMLTableCellElement = document.createElement("th");
+    let text: Text = document.createTextNode('ações');
+    th.setAttribute("colSpan", "2");
+    th.appendChild(text);
+    row.appendChild(th);
+    tabela.setAttribute("border", "2");
+}
+
+/**
+ * função que gera as linhas da tabela e preenche com os dados
+ * @param tabela refrencia da tabela HTML
+ * @param dados array com os dados que serão mostrados na tabela
+ */
+function gerarLinhasTabela(tabela: HTMLTableElement, dados: Array<Scientist>): void {
+    for (let elemento of dados) {
+        let row: HTMLTableRowElement = tabela.insertRow();
+        for (let chave in elemento) {
+            let cell: HTMLTableCellElement = row.insertCell();
+            let text: Text = document.createTextNode(elemento[chave]);
+            cell.appendChild(text);
+        }
+
+        //inserir as ações editar e excluir
+        let cell: HTMLTableCellElement = row.insertCell();
+        let link: HTMLAnchorElement = document.createElement('a');
+        let text: Text = document.createTextNode('editar');
+        link.appendChild(text);
+        link.setAttribute("href", "#");
+        link.setAttribute("onClick",`editarRegistro(${elemento.id})` );
+        cell.appendChild(link);
+        let cell: HTMLTableCellElement = row.insertCell();
+        let link: HTMLAnchorElement = document.createElement('a');
+        let text: Text = document.createTextNode('excluir');
+        link.appendChild(text);
+        link.setAttribute("href", "#");
+        link.setAttribute("onClick",`removeRegistro(${elemento.id})` );
+        cell.appendChild(link);
+    }
+}
 
 /**
  * função que monta a tabela em HTML a partir do Array lista4
  */
 function gerarTabela(): void {
-    //cria uma tabela com os resgistros
-    let html: string = "";
-    html += "<h4>Listagem dos Registros</h4>";
-    html += "<table border='1'>";
-    html += "<tr><th scope='col'>ID</th><th scope='col'>Name</th><th scope='col'>Bio</th><th scope='col' colspan='2'>Ações</th></tr>";
-    for(let i=0; i < lista4.length; i++)
-    {
-        
-        html += "<tr>";
-        html += "<td id='id" + lista4[i].id + "'>" + lista4[i].id + "</td>";
-        html += "<td id='name" + lista4[i].id + "'>" + lista4[i].name + "</td>";
-        html += "<td id='bio" + lista4[i].id + "'>" + lista4[i].bio + "</td>";
-        html += "<td><a id='editar' href='#' onClick='editarRegistro(" + lista4[i].id + ")' >editar</a></td>";
-        html += "<td><a id='excluir' href='#' onClick='removeRegistro(" + lista4[i].id + ")' >excluir</a></td>";
-        html += "</tr>";
-    }
-    html += "</table>";
-    //coloca o innerHTML dentro da div#table
-    document.getElementById('table').innerHTML = html;
+    //gera o cabeçalho e as linhas da tabela
+    gerarCabecalhoTabela(tabelaHTML, rotulosTabela);
+    gerarLinhasTabela(tabelaHTML, lista4);
+}
+
+/**
+ * função que atualiza os dados da tabela
+ */
+function atualizarTabela(): void {
+    //remove todas as linhas da tabela
+    limparTabela();
+    //gera as linhas da tabela com os dados atualizados do array lista4
+    gerarTabela();
+}
+
+/**
+ * função que limpa todas as linhas da tabela
+ */
+function limparTabela(): void {
+    //remover todas as linhas da tabela da tabela
+    document.querySelectorAll("table tr").forEach(e => {
+        e.remove()
+    });
 }
 
 /**
@@ -70,8 +143,9 @@ function removeRegistro(id: number): void {
     listResult = lista4.filter(diferenteId(id));
     //atualiza a variável lista2 após a exclusão do objeto
     lista4 = listResult;
+
     //renderiza a tabela com os dados da lista4 atualizados
-    gerarTabela();
+    atualizarTabela();
 }
 
 /**
@@ -107,7 +181,7 @@ function editarRegistro(id: number): void {
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
-const alterById = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
+const alteraPropriedade = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
 
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
@@ -116,9 +190,9 @@ const alterById = (property: string, newValue: string) => (element: Scientist) =
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  */
-function updateById(id: number, property: string, newValue: string): void {
+function alteraPropriedadePeloId(id: number, property: string, newValue: string): void {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
-    lista4.filter(equalId(id)).map(alterById(property, newValue));
+    lista4.filter(igualId(id)).map(alteraPropriedade(property, newValue));
 }
 
 /**
@@ -130,12 +204,13 @@ function salvarEdicao(): void {
     const name: string = document.getElementById('input_name').value;
     const bio: string = document.getElementById('textarea_bio').value;
     //chama a função que atualiza
-    updateById(id, 'name', name);
-    updateById(id, 'bio', bio);
+    alteraPropriedadePeloId(id, 'name', name);
+    alteraPropriedadePeloId(id, 'bio', bio);
     //volta para o modo edição
     modoVisualizacao();
-    //renderiza a tabela com os dados atualizados
-    gerarTabela();
+    
+    //renderiza a tabela com os dados da lista4 atualizados
+    atualizarTabela();
 }
 
 /**

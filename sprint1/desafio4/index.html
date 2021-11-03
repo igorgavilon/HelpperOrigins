@@ -9,15 +9,19 @@
 </head>
 <body>
     <h1>Desafio 4 - Manipular Registros</h1>
-    <div id="table">   
+    <div id="table">  
+        <h4>Listagem dos Registros</h4> 
+        <table>
+            
+        </table>
     </div>
     <div id="formulario">
         <h4>Formulário de Edição</h4>
-        <caption>ID</caption>
+        <label for="input_id">ID</label>
         <input type="number" name="input_id" id="input_id" disabled></br>
-        <caption>Name</caption>
+        <label for="input_name">Name</label>
         <input type="text" name="input_name" id="input_name" size="60"></br>
-        <caption>Bio</caption>
+        <label for="textarea_bio">Bio</label>
         <textarea name="textarea_bio" id="textarea_bio" cols="60" rows="5"></textarea></br></br>
         <button id="bt_salvar" onClick="salvarEdicao()">Salvar</button>
         <button id="bt_cancelar" onclick="cancelarEdicao()">Cancelar</button>
