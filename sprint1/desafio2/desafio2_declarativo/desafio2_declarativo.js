@@ -11,11 +11,11 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 //enum que contém as propriedades que podem ser alteradas no objeto Scientist
-var objectProperties;
-(function (objectProperties) {
-    objectProperties["name"] = "name";
-    objectProperties["bio"] = "bio";
-})(objectProperties || (objectProperties = {}));
+var EnumPersonProperties;
+(function (EnumPersonProperties) {
+    EnumPersonProperties["name"] = "name";
+    EnumPersonProperties["bio"] = "bio";
+})(EnumPersonProperties || (EnumPersonProperties = {}));
 /**
  * declaração do array de Objetos
  */
@@ -92,7 +92,7 @@ function deleteById(list, id) {
 }
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * para alterar 'name': EnumPersonProperties.name. para alterar 'bio': EnumPersonProperties.bio
  * @param property enum type: nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
@@ -100,6 +100,7 @@ function deleteById(list, id) {
 var alterProperty = function (property, newValue) { return function (element) { return element[property] = newValue; }; };
 /**
  * função que altera a propriedade "name" ou "bio" do objeto selecionado pelo id
+ * para alterar 'name': EnumPersonProperties.name. para alterar 'bio': EnumPersonProperties.bio
  * @param list lista com os objetos Scientist
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
@@ -124,7 +125,7 @@ console.log(deleteById(lista2, 3));
 //espera-se a seguinte resposta: id não encontrado
 console.log(getName(lista2, 30));
 //alterando as propriedades do id 1
-console.log(updateById(lista2, 1, objectProperties.name, 'Igor Gavilon'));
-console.log(updateById(lista2, 1, objectProperties.bio, 'Desenvolvedor de Software.'));
+console.log(updateById(lista2, 1, EnumPersonProperties.name, 'Igor Gavilon'));
+console.log(updateById(lista2, 1, EnumPersonProperties.bio, 'Desenvolvedor de Software.'));
 //imprime a lista original para verificar que os dados não foram alterados
 console.log(lista2);

@@ -1,10 +1,10 @@
 "use strict";
 //enum que contém as propriedades que podem ser alteradas no objeto Scientist
-var objectProperties;
-(function (objectProperties) {
-    objectProperties["name"] = "name";
-    objectProperties["bio"] = "bio";
-})(objectProperties || (objectProperties = {}));
+var EnumPersonProperties;
+(function (EnumPersonProperties) {
+    EnumPersonProperties["name"] = "name";
+    EnumPersonProperties["bio"] = "bio";
+})(EnumPersonProperties || (EnumPersonProperties = {}));
 /**
  * declaração do array de Objetos
  */
@@ -76,7 +76,7 @@ function deleteById(id) {
 }
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * para alterar 'name': EnumPersonProperties.name. para alterar 'bio': EnumPersonProperties.bio
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
@@ -106,10 +106,10 @@ deleteById(3);
 //testando se o id foi deletado
 console.log(getName(3));
 //alterando as propriedades do id 1
-console.log(updateById(1, objectProperties.name, 'igor gavilon'));
-console.log(updateById(1, objectProperties.bio, 'desenvolvedor de software'));
+console.log(updateById(1, EnumPersonProperties.name, 'igor gavilon'));
+console.log(updateById(1, EnumPersonProperties.bio, 'desenvolvedor de software'));
 //tenta alterar um objeto com um id que não existe
 //resposta esperada: "Nenhum id encontrado."
-console.log(updateById(100, objectProperties.bio, 'alterando um id não existente'));
+console.log(updateById(100, EnumPersonProperties.bio, 'alterando um id não existente'));
 //imprime a lista para verificar que os dados foram realmente alterados
 console.log(lista);
