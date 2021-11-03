@@ -2,19 +2,19 @@
 /**
  * variável que armazena os modos que o usuário pode interagir
  */
-var modo;
-(function (modo) {
-    modo["edicao"] = "edicao";
-    modo["visualizacao"] = "visualizacao";
-})(modo || (modo = {}));
+var EnumModo;
+(function (EnumModo) {
+    EnumModo["edicao"] = "edicao";
+    EnumModo["visualizacao"] = "visualizacao";
+})(EnumModo || (EnumModo = {}));
 /**
  * enum que contém as propriedades do objeto que podem ser alteradas
  */
-var propriedadeObjeto;
-(function (propriedadeObjeto) {
-    propriedadeObjeto["name"] = "name";
-    propriedadeObjeto["bio"] = "bio";
-})(propriedadeObjeto || (propriedadeObjeto = {}));
+var EnumPropriedadesPessoa;
+(function (EnumPropriedadesPessoa) {
+    EnumPropriedadesPessoa["name"] = "name";
+    EnumPropriedadesPessoa["bio"] = "bio";
+})(EnumPropriedadesPessoa || (EnumPropriedadesPessoa = {}));
 /**
  * declaração do array de Objetos
  */
@@ -43,7 +43,7 @@ function configuracaoInicial() {
     /**
      * define o modo de visualização: mostrar somente a tabela
      */
-    definirModo(modo.visualizacao);
+    definirModo(EnumModo.visualizacao);
     /**
      * renderizar a tabela
      */
@@ -172,11 +172,11 @@ function editarRegistro(id) {
     document.getElementById('input_name').value = result[0].name;
     document.getElementById('textarea_bio').value = result[0].bio;
     //entra em modo de edição: mostra o formulário e esconde a tabela
-    definirModo(modo.edicao);
+    definirModo(EnumModo.edicao);
 }
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * para alterar 'name': EnumPropriedadesPessoa.name. para alterar EnumPropriedadesPessoa.bio
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
@@ -184,7 +184,7 @@ function editarRegistro(id) {
 var alteraPropriedade = function (property, newValue) { return function (element) { return element[property] = newValue; }; };
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * para alterar 'name': EnumPropriedadesPessoa.name. para alterar EnumPropriedadesPessoa.bio
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
@@ -202,10 +202,10 @@ function salvarEdicao() {
     var name = document.getElementById('input_name').value;
     var bio = document.getElementById('textarea_bio').value;
     //chama a função que atualiza a propriedade do objeto alterado
-    alteraPropriedadePeloId(id, propriedadeObjeto.name, name);
-    alteraPropriedadePeloId(id, propriedadeObjeto.bio, bio);
+    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.name, name);
+    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.bio, bio);
     //volta para o modo visualização
-    definirModo(modo.visualizacao);
+    definirModo(EnumModo.visualizacao);
     //renderiza a tabela com os dados da lista4 atualizados
     atualizarTabela();
 }
@@ -214,7 +214,7 @@ function salvarEdicao() {
  */
 function cancelarEdicao() {
     //volta para o modo visualização
-    definirModo(modo.visualizacao);
+    definirModo(EnumModo.visualizacao);
 }
 /**
  * função que define o modo que o usuário terá acesso

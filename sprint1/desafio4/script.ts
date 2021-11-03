@@ -10,7 +10,7 @@ interface Scientist {
 /**
  * variável que armazena os modos que o usuário pode interagir
  */
-enum modo {
+enum EnumModo {
     edicao = "edicao",
     visualizacao = "visualizacao"
 }
@@ -18,7 +18,7 @@ enum modo {
 /**
  * enum que contém as propriedades do objeto que podem ser alteradas
  */
-enum propriedadeObjeto {
+enum EnumPropriedadesPessoa {
     name = "name",
     bio = "bio"
 }
@@ -53,7 +53,7 @@ function configuracaoInicial(): void {
     /**
      * define o modo de visualização: mostrar somente a tabela
      */
-    definirModo(modo.visualizacao);
+    definirModo(EnumModo.visualizacao);
     /**
      * renderizar a tabela
      */
@@ -194,26 +194,26 @@ function editarRegistro(id: number): void {
     document.getElementById('input_name').value = result[0].name;
     document.getElementById('textarea_bio').value = result[0].bio;
     //entra em modo de edição: mostra o formulário e esconde a tabela
-    definirModo(modo.edicao);
+    definirModo(EnumModo.edicao);
 }
 
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * para alterar 'name': EnumPropriedadesPessoa.name. para alterar EnumPropriedadesPessoa.bio
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
-const alteraPropriedade = (property: propriedadeObjeto, newValue: string) => (element: Scientist) => element[property] = newValue;
+const alteraPropriedade = (property: EnumPropriedadesPessoa, newValue: string) => (element: Scientist) => element[property] = newValue;
 
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
- * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
+ * para alterar 'name': EnumPropriedadesPessoa.name. para alterar EnumPropriedadesPessoa.bio
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  */
-function alteraPropriedadePeloId(id: number, property: propriedadeObjeto, newValue: string): void {
+function alteraPropriedadePeloId(id: number, property: EnumPropriedadesPessoa, newValue: string): void {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
     lista4.filter(igualId(id)).map(alteraPropriedade(property, newValue));
 }
@@ -227,10 +227,10 @@ function salvarEdicao(): void {
     const name: string = document.getElementById('input_name').value;
     const bio: string = document.getElementById('textarea_bio').value;
     //chama a função que atualiza a propriedade do objeto alterado
-    alteraPropriedadePeloId(id, propriedadeObjeto.name, name);
-    alteraPropriedadePeloId(id, propriedadeObjeto.bio, bio);
+    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.name, name);
+    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.bio, bio);
     //volta para o modo visualização
-    definirModo(modo.visualizacao);
+    definirModo(EnumModo.visualizacao);
     
     //renderiza a tabela com os dados da lista4 atualizados
     atualizarTabela();
@@ -241,14 +241,14 @@ function salvarEdicao(): void {
  */
 function cancelarEdicao(): void {
     //volta para o modo visualização
-    definirModo(modo.visualizacao);
+    definirModo(EnumModo.visualizacao);
 }
 
 /**
  * função que define o modo que o usuário terá acesso
  * @param modo enum type: modo que o usuário terá acesso: edição ou visualização dos dados
  */
-function definirModo(modo: modo): void {
+function definirModo(modo: EnumModo): void {
     document.getElementById('table').hidden = (modo === "edicao");
     document.getElementById('formulario').hidden = (modo === "visualizacao");
 }
