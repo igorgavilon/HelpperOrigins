@@ -10,6 +10,12 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+//enum que contém as propriedades que podem ser alteradas no objeto Scientist
+var objectProperties;
+(function (objectProperties) {
+    objectProperties["name"] = "name";
+    objectProperties["bio"] = "bio";
+})(objectProperties || (objectProperties = {}));
 /**
  * declaração do array de Objetos
  */
@@ -87,7 +93,7 @@ function deleteById(list, id) {
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
  * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
- * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param property enum type: nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
@@ -102,11 +108,11 @@ var alterProperty = function (property, newValue) { return function (element) { 
  */
 function updateById(list, id, property, newValue) {
     //array de cópia do array de entrada, list
-    //retirando a referência de memória com: list.map(element => {return {...element}})
+    //retirando a referência de memória com: list.map((element: Scientist) => ({...element}))
     //garantindo a imutabilidade do parâmetro passaddo lista2
-    var auxiliarList = list.map(function (element) { return __assign({}, element); });
+    var auxiliarList = list.map(function (element) { return (__assign({}, element)); });
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
-    auxiliarList.filter(equalId(id)).map(alterProperty(property, newValue));
+    findById(auxiliarList, id).map(alterProperty(property, newValue));
     return auxiliarList;
 }
 //realizando buscas para o id especificado
@@ -118,7 +124,7 @@ console.log(deleteById(lista2, 3));
 //espera-se a seguinte resposta: id não encontrado
 console.log(getName(lista2, 30));
 //alterando as propriedades do id 1
-console.log(updateById(lista2, 1, 'name', 'Igor Gavilon'));
-console.log(updateById(lista2, 1, 'bio', 'Desenvolvedor de Software.'));
+console.log(updateById(lista2, 1, objectProperties.name, 'Igor Gavilon'));
+console.log(updateById(lista2, 1, objectProperties.bio, 'Desenvolvedor de Software.'));
 //imprime a lista original para verificar que os dados não foram alterados
 console.log(lista2);

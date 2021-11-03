@@ -7,6 +7,12 @@ interface Scientist {
     bio: string
 }
 
+//enum que contém as propriedades que podem ser alteradas no objeto Scientist
+enum objectProperties {
+    name = "name",
+    bio = "bio"
+}
+
 /**
  * declaração do array de Objetos
  */
@@ -91,22 +97,19 @@ function deleteById(id: number): void {
  *          'Propriedade Bio alterada.'
  *          'Nenhum id encontrado.'
  */
-function updateById(id: number, property: string, newValue: string): string {
+function updateById(id: number, property: objectProperties, newValue: string): string {
     //resposta padrão caso não encontre um id válido
-    let response: string = 'Nenhum id encontrado.'
+    let response: string = 'Nenhum id encontrado.';
+
     //busca pelo elemento que será alterado
-    lista.forEach(element => {
-        if(element.id == id) {
-            //verifica qual propriedade deve ser alterada
-            //previne que o usuário tente alterar uma propriedade que não existe
-            if(property == 'name' || property == 'bio') {
-                element[property] = newValue;
-                response = `Propriedade "${property}" alterada.`
-            }else {
-                response = 'Propriedade não existente.'
-            }
-        }
-    });
+    let elementFound: Scientist | null = elementById(lista, id);
+
+    //caso o objeto seja encontrado, altera a propriedade selecionada
+    if(elementFound != null) {
+        elementFound[property] = newValue;
+        response = `Propriedade "${property}" alterada.`;
+    }
+
     //retorna uma resposta informando se a operação foi efetuada ou não
     return (response);
 }
@@ -120,10 +123,11 @@ deleteById(3);
 console.log(getName(3));
 
 //alterando as propriedades do id 1
-updateById(1, 'name', 'igor gavilon');
-updateById(1, 'bio', 'desenvolvedor de software');
+console.log(updateById(1, objectProperties.name, 'igor gavilon'));
+console.log(updateById(1, objectProperties.bio, 'desenvolvedor de software'));
+//tenta alterar um objeto com um id que não existe
+//resposta esperada: "Nenhum id encontrado."
+console.log(updateById(100, objectProperties.bio, 'alterando um id não existente'));
 
 //imprime a lista para verificar que os dados foram realmente alterados
 console.log(lista);
-
-

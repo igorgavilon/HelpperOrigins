@@ -7,6 +7,12 @@ interface Scientist {
     bio: string
 }
 
+//enum que contém as propriedades que podem ser alteradas no objeto Scientist
+enum objectProperties {
+    name = "name",
+    bio = "bio"
+}
+
 /**
  * declaração do array de Objetos
  */
@@ -91,11 +97,11 @@ function deleteById(list: Array<Scientist>, id: number): Scientist[] {
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
  * para alterar 'name': property = 'name'. para alterar 'bio': property = 'bio'
- * @param property nome da propriedade do objeto Scientist que se deseja alterar
+ * @param property enum type: nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
-const alterProperty = (property: string, newValue: string) => (element: Scientist) => element[property] = newValue;
+const alterProperty = (property: objectProperties, newValue: string) => (element: Scientist) => element[property] = newValue;
 
 /**
  * função que altera a propriedade "name" ou "bio" do objeto selecionado pelo id
@@ -105,14 +111,14 @@ const alterProperty = (property: string, newValue: string) => (element: Scientis
  * @param newValue novo valor para a propriedade
  * @returns array do tipo Scientist contendo o item que foi atualizado
  */
-function updateById(list: Array<Scientist>, id: number, property: string, newValue: string): Array<Scientist> {
+function updateById(list: Array<Scientist>, id: number, property: objectProperties, newValue: string): Array<Scientist> {
     //array de cópia do array de entrada, list
-    //retirando a referência de memória com: list.map(element => {return {...element}})
+    //retirando a referência de memória com: list.map((element: Scientist) => ({...element}))
     //garantindo a imutabilidade do parâmetro passaddo lista2
-    let auxiliarList: Array<Scientist> = list.map(element => {return {...element}});
+    let auxiliarList: Array<Scientist> = list.map((element: Scientist) => ({...element}));
 
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
-    auxiliarList.filter(equalId(id)).map(alterProperty(property, newValue));
+    findById(auxiliarList, id).map(alterProperty(property, newValue))
     return auxiliarList;
 }
 
@@ -128,8 +134,8 @@ console.log(deleteById(lista2, 3));
 console.log(getName(lista2, 30));
 
 //alterando as propriedades do id 1
-console.log(updateById(lista2, 1, 'name', 'Igor Gavilon'));
-console.log(updateById(lista2, 1, 'bio', 'Desenvolvedor de Software.'));
+console.log(updateById(lista2, 1, objectProperties.name, 'Igor Gavilon'));
+console.log(updateById(lista2, 1, objectProperties.bio, 'Desenvolvedor de Software.'));
 
 //imprime a lista original para verificar que os dados não foram alterados
 console.log(lista2);
