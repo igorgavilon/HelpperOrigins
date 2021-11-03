@@ -4,21 +4,21 @@
  */
 var EnumModo;
 (function (EnumModo) {
-    EnumModo["edicao"] = "edicao";
-    EnumModo["visualizacao"] = "visualizacao";
+    EnumModo["EDICAO"] = "edicao";
+    EnumModo["VISUALIZACAO"] = "visualizacao";
 })(EnumModo || (EnumModo = {}));
 /**
  * enum que contém as propriedades do objeto que podem ser alteradas
  */
 var EnumPropriedadesPessoa;
 (function (EnumPropriedadesPessoa) {
-    EnumPropriedadesPessoa["name"] = "name";
-    EnumPropriedadesPessoa["bio"] = "bio";
+    EnumPropriedadesPessoa["NOME"] = "name";
+    EnumPropriedadesPessoa["BIO"] = "bio";
 })(EnumPropriedadesPessoa || (EnumPropriedadesPessoa = {}));
 /**
  * declaração do array de Objetos
  */
-var lista4 = [
+var Cientistas = [
     { id: 1, name: "Ada Lovelace",
         bio: "Ada Lovelace, foi uma matemática e escritora inglesa reconhecida por ter escrito o primeiro algoritmo para ser processado por uma máquina" },
     { id: 2, name: "Alan Turing",
@@ -35,7 +35,7 @@ var tabelaHTML = document.querySelector("table");
 /**
  * variável que armazena os rótulos dos dados da tabela
  */
-var rotulosTabela = Object.keys(lista4[0]);
+var rotulosTabela = Object.keys(Cientistas[0]);
 /**
  * função que realiza a configuração inicial quando a página é carregada: HTML onload()
  */
@@ -43,7 +43,7 @@ function configuracaoInicial() {
     /**
      * define o modo de visualização: mostrar somente a tabela
      */
-    definirModo(EnumModo.visualizacao);
+    definirModo(EnumModo.VISUALIZACAO);
     /**
      * renderizar a tabela
      */
@@ -112,12 +112,12 @@ function gerarAcoesDeUsuario(linha, elemento) {
     celula.appendChild(elemento_a);
 }
 /**
- * função que monta a tabela em HTML a partir do Array lista4
+ * função que monta a tabela em HTML a partir do Array Cientistas
  */
 function gerarTabela() {
     //gera o cabeçalho e as linhas da tabela
     gerarCabecalhoTabela(tabelaHTML, rotulosTabela);
-    gerarLinhasTabela(tabelaHTML, lista4);
+    gerarLinhasTabela(tabelaHTML, Cientistas);
 }
 /**
  * função que atualiza os dados da tabela
@@ -125,7 +125,7 @@ function gerarTabela() {
 function atualizarTabela() {
     //remove todas as linhas da tabela
     limparTabela();
-    //gera as linhas da tabela com os dados atualizados do array lista4
+    //gera as linhas da tabela com os dados atualizados do array Cientistas
     gerarTabela();
 }
 /**
@@ -143,19 +143,19 @@ function limparTabela() {
  * @returns true ou false, caso o id do elemento do array
  *          seja diferente ao parametro id ou não, respectivamente
  */
-var diferenteId = function (id) { return function (element) { return element.id != id; }; };
+var diferenteId = function (id) { return function (elemento) { return elemento.id != id; }; };
 /**
  * função que remove um dos registros da tabela
- * @param id id numérico do objeto Scientist que se deseja remover da tabela
+ * @param id id numérico do objeto Cientista que se deseja remover da tabela
  */
 function removeRegistro(id) {
     //array que armazenará o resultado do filtro
-    var listResult = [];
+    var listaResultado = [];
     //filtra o array e retira somente o objeto com o id passado
-    listResult = lista4.filter(diferenteId(id));
-    //atualiza a variável lista2 após a exclusão do objeto
-    lista4 = listResult;
-    //renderiza a tabela com os dados da lista4 atualizados
+    listaResultado = Cientistas.filter(diferenteId(id));
+    //atualiza a variável Cientistas após a exclusão do objeto
+    Cientistas = listaResultado;
+    //renderiza a tabela com os dados do array Cientistas atualizados
     atualizarTabela();
 }
 /**
@@ -164,57 +164,57 @@ function removeRegistro(id) {
  * @returns true ou false, caso o id do elemento do array
  *          seja igual ao parametro id ou não, respectivamente
  */
-var igualId = function (id) { return function (element) { return element.id == id; }; };
+var igualId = function (id) { return function (elemento) { return elemento.id == id; }; };
 /**
  * função que prepara e mostra o formulário
  * para edição dos dados do registro da tabela selecionado
- * @param id id numérico do objeto Scientist que deseja editar
+ * @param id id numérico do objeto Cientista que deseja editar
  */
 function editarRegistro(id) {
     //variável que armazena o registro selecionado pelo usuário
-    var result = [];
+    var listaResultado = [];
     //filtra somente o registro de interesse
-    result = lista4.filter(igualId(id));
+    listaResultado = Cientistas.filter(igualId(id));
     //preenche o formulário com os valores do registro selecionado
     document.getElementById('input_id').value = id;
-    document.getElementById('input_name').value = result[0].name;
-    document.getElementById('textarea_bio').value = result[0].bio;
+    document.getElementById('input_name').value = listaResultado[0].name;
+    document.getElementById('textarea_bio').value = listaResultado[0].bio;
     //entra em modo de edição: mostra o formulário e esconde a tabela
-    definirModo(EnumModo.edicao);
+    definirModo(EnumModo.EDICAO);
 }
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
- * para alterar 'name': EnumPropriedadesPessoa.name. para alterar EnumPropriedadesPessoa.bio
- * @param property nome da propriedade do objeto Scientist que se deseja alterar
- * @param newValue novo valor para a propriedade
+ * para alterar 'name': EnumPropriedadesPessoa.NOME. para alterar EnumPropriedadesPessoa.BIO
+ * @param propriedade nome da propriedade do objeto Cientista que se deseja alterar
+ * @param novoValor novo valor para a propriedade
  * @returns o atributo com o seu novo valor
  */
-var alteraPropriedade = function (property, newValue) { return function (element) { return element[property] = newValue; }; };
+var alteraPropriedade = function (propriedade, novoValor) { return function (elemento) { return elemento[propriedade] = novoValor; }; };
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
- * para alterar 'name': EnumPropriedadesPessoa.name. para alterar EnumPropriedadesPessoa.bio
+ * para alterar 'name': EnumPropriedadesPessoa.NOME. para alterar EnumPropriedadesPessoa.BIO
  * @param id id numérico do objeto que se deseja alterar
- * @param property nome da propriedade do objeto Scientist que se deseja alterar
- * @param newValue novo valor para a propriedade
+ * @param propriedade nome da propriedade do objeto Cientista que se deseja alterar
+ * @param novoValor novo valor para a propriedade
  */
-function alteraPropriedadePeloId(id, property, newValue) {
+function alteraPropriedadePeloId(id, propriedade, novoValor) {
     //faz uma busca do objeto pelo id, caso encontre altera o valor da propriedade 'nome' ou 'bio'
-    lista4.filter(igualId(id)).map(alteraPropriedade(property, newValue));
+    Cientistas.filter(igualId(id)).map(alteraPropriedade(propriedade, novoValor));
 }
 /**
- * função que realiza o update dos dados do formulário no Array lista4
+ * função que realiza o update dos dados do formulário no Array Cientistas
  */
 function salvarEdicao() {
     //busca os dados que estão no formulário
     var id = document.getElementById('input_id').value;
-    var name = document.getElementById('input_name').value;
+    var nome = document.getElementById('input_name').value;
     var bio = document.getElementById('textarea_bio').value;
     //chama a função que atualiza a propriedade do objeto alterado
-    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.name, name);
-    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.bio, bio);
+    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.NOME, nome);
+    alteraPropriedadePeloId(id, EnumPropriedadesPessoa.BIO, bio);
     //volta para o modo visualização
-    definirModo(EnumModo.visualizacao);
-    //renderiza a tabela com os dados da lista4 atualizados
+    definirModo(EnumModo.VISUALIZACAO);
+    //renderiza a tabela com os dados do array Cientistas atualizados
     atualizarTabela();
 }
 /**
@@ -222,13 +222,13 @@ function salvarEdicao() {
  */
 function cancelarEdicao() {
     //volta para o modo visualização
-    definirModo(EnumModo.visualizacao);
+    definirModo(EnumModo.VISUALIZACAO);
 }
 /**
  * função que define o modo que o usuário terá acesso
  * @param modo enum type: modo que o usuário terá acesso: edição ou visualização dos dados
  */
 function definirModo(modo) {
-    document.getElementById('table').hidden = (modo === "edicao");
-    document.getElementById('formulario').hidden = (modo === "visualizacao");
+    document.getElementById('table').hidden = (modo === EnumModo.EDICAO);
+    document.getElementById('formulario').hidden = (modo === EnumModo.VISUALIZACAO);
 }
