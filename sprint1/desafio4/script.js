@@ -82,26 +82,34 @@ function gerarLinhasTabela(tabela, dados) {
         var elemento = dados_1[_i];
         var linha = tabela.insertRow();
         for (var chave in elemento) {
-            var celula_1 = linha.insertCell();
-            var texto_2 = document.createTextNode(elemento[chave]);
-            celula_1.appendChild(texto_2);
+            var celula = linha.insertCell();
+            var texto = document.createTextNode(elemento[chave]);
+            celula.appendChild(texto);
         }
-        //inserir as ações editar e excluir
-        var celula = linha.insertCell();
-        var elemento_a = document.createElement('a');
-        var texto = document.createTextNode('editar');
-        elemento_a.appendChild(texto);
-        elemento_a.setAttribute("href", "#");
-        elemento_a.setAttribute("onClick", "editarRegistro(" + elemento.id + ")");
-        celula.appendChild(elemento_a);
-        var celula = linha.insertCell();
-        var elemento_a = document.createElement('a');
-        var texto = document.createTextNode('excluir');
-        elemento_a.appendChild(texto);
-        elemento_a.setAttribute("href", "#");
-        elemento_a.setAttribute("onClick", "removeRegistro(" + elemento.id + ")");
-        celula.appendChild(elemento_a);
+        gerarAcoesDeUsuario(linha, elemento);
     }
+}
+/**
+ * função que adiciona dois links com ações que o usuário pode realizar: editar e excluir registro
+ * @param linha linha atual da tabela
+ * @param elemento objeto com os dados para preeencher a linha atual da tabela
+ */
+function gerarAcoesDeUsuario(linha, elemento) {
+    //inserir as ações editar e excluir
+    var celula = linha.insertCell();
+    var elemento_a = document.createElement('a');
+    var texto = document.createTextNode('editar');
+    elemento_a.appendChild(texto);
+    elemento_a.setAttribute("href", "#");
+    elemento_a.setAttribute("onClick", "editarRegistro(" + elemento.id + ")");
+    celula.appendChild(elemento_a);
+    var celula = linha.insertCell();
+    var elemento_a = document.createElement('a');
+    var texto = document.createTextNode('excluir');
+    elemento_a.appendChild(texto);
+    elemento_a.setAttribute("href", "#");
+    elemento_a.setAttribute("onClick", "removeRegistro(" + elemento.id + ")");
+    celula.appendChild(elemento_a);
 }
 /**
  * função que monta a tabela em HTML a partir do Array lista4

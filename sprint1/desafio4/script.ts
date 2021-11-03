@@ -100,22 +100,31 @@ function gerarLinhasTabela(tabela: HTMLTableElement, dados: Array<Scientist>): v
             celula.appendChild(texto);
         }
 
-        //inserir as ações editar e excluir
-        let celula: HTMLTableCellElement = linha.insertCell();
-        let elemento_a: HTMLAnchorElement = document.createElement('a');
-        let texto: Text = document.createTextNode('editar');
-        elemento_a.appendChild(texto);
-        elemento_a.setAttribute("href", "#");
-        elemento_a.setAttribute("onClick",`editarRegistro(${elemento.id})` );
-        celula.appendChild(elemento_a);
-        let celula: HTMLTableCellElement = linha.insertCell();
-        let elemento_a: HTMLAnchorElement = document.createElement('a');
-        let texto: Text = document.createTextNode('excluir');
-        elemento_a.appendChild(texto);
-        elemento_a.setAttribute("href", "#");
-        elemento_a.setAttribute("onClick",`removeRegistro(${elemento.id})` );
-        celula.appendChild(elemento_a);
+        gerarAcoesDeUsuario(linha, elemento);        
     }
+}
+
+/**
+ * função que adiciona dois links com ações que o usuário pode realizar: editar e excluir registro
+ * @param linha linha atual da tabela
+ * @param elemento objeto com os dados para preeencher a linha atual da tabela
+ */
+function gerarAcoesDeUsuario(linha: HTMLTableRowElement, elemento: Scientist): void {
+    //inserir as ações editar e excluir
+    let celula: HTMLTableCellElement = linha.insertCell();
+    let elemento_a: HTMLAnchorElement = document.createElement('a');
+    let texto: Text = document.createTextNode('editar');
+    elemento_a.appendChild(texto);
+    elemento_a.setAttribute("href", "#");
+    elemento_a.setAttribute("onClick",`editarRegistro(${elemento.id})` );
+    celula.appendChild(elemento_a);
+    let celula: HTMLTableCellElement = linha.insertCell();
+    let elemento_a: HTMLAnchorElement = document.createElement('a');
+    let texto: Text = document.createTextNode('excluir');
+    elemento_a.appendChild(texto);
+    elemento_a.setAttribute("href", "#");
+    elemento_a.setAttribute("onClick",`removeRegistro(${elemento.id})` );
+    celula.appendChild(elemento_a);
 }
 
 /**
