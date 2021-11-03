@@ -23,6 +23,25 @@ enum EnumPropriedadesPessoa {
     BIO = "bio"
 }
 
+//interface com a definição do tipo de uma ação de usuário com seus atributos
+interface AcaoUsuario {
+    rotulo: string,
+    acao: string
+}
+
+//array com objeto de configuração para criar as ações de usuário na tabela
+const configuracoesAcoesUsuario: Array<AcaoUsuario> = [
+    {
+        rotulo: "editar",
+        acao: "editarRegistro"
+    },
+    {
+        rotulo: "excluir",
+        acao: "removerRegistro"
+    }
+];
+
+
 /**
  * declaração do array de Objetos
  */
@@ -100,7 +119,7 @@ function gerarLinhasTabela(tabela: HTMLTableElement, dados: Array<Cientista>): v
             celula.appendChild(texto);
         }
 
-        gerarAcoesDeUsuario(linha, elemento);        
+        gerarAcoesDeUsuario(linha, elemento, configuracoesAcoesUsuario);        
     }
 }
 
@@ -108,23 +127,19 @@ function gerarLinhasTabela(tabela: HTMLTableElement, dados: Array<Cientista>): v
  * função que adiciona dois links com ações que o usuário pode realizar: editar e excluir registro
  * @param linha linha atual da tabela
  * @param elemento objeto com os dados para preeencher a linha atual da tabela
+ * @param configuracoes array com objeto de configuração das ações de usuário
  */
-function gerarAcoesDeUsuario(linha: HTMLTableRowElement, elemento: Cientista): void {
+function gerarAcoesDeUsuario(linha: HTMLTableRowElement, elemento: Cientista, configuracoes: Array<AcaoUsuario>): void {
     //inserir as ações editar e excluir
-    let celula: HTMLTableCellElement = linha.insertCell();
-    let elemento_a: HTMLAnchorElement = document.createElement('a');
-    let texto: Text = document.createTextNode('editar');
-    elemento_a.appendChild(texto);
-    elemento_a.setAttribute("href", "#");
-    elemento_a.setAttribute("onClick",`editarRegistro(${elemento.id})` );
-    celula.appendChild(elemento_a);
-    let celula: HTMLTableCellElement = linha.insertCell();
-    let elemento_a: HTMLAnchorElement = document.createElement('a');
-    let texto: Text = document.createTextNode('excluir');
-    elemento_a.appendChild(texto);
-    elemento_a.setAttribute("href", "#");
-    elemento_a.setAttribute("onClick",`removeRegistro(${elemento.id})` );
-    celula.appendChild(elemento_a);
+    for(const configuracao of configuracoes) {
+        let celula: HTMLTableCellElement = linha.insertCell();
+        let elemento_a: HTMLAnchorElement = document.createElement('a');
+        let texto: Text = document.createTextNode(configuracao.rotulo);
+        elemento_a.appendChild(texto);
+        elemento_a.setAttribute("href", "#");
+        elemento_a.setAttribute("onClick", `${configuracao.acao}(${elemento.id})`);
+        celula.appendChild(elemento_a);
+    }
 }
 
 /**
@@ -168,7 +183,7 @@ const diferenteId = (id: number) => (elemento: Cientista) => elemento.id != id;
  * função que remove um dos registros da tabela
  * @param id id numérico do objeto Cientista que se deseja remover da tabela
  */
-function removeRegistro(id: number): void {
+function removerRegistro(id: number): void {
     //array que armazenará o resultado do filtro
     let listaResultado: Array<Cientista> = [];
     //filtra o array e retira somente o objeto com o id passado

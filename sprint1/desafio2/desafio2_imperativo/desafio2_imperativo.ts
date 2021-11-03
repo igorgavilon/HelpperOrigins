@@ -9,8 +9,8 @@ interface Scientist {
 
 //enum que contém as propriedades que podem ser alteradas no objeto Scientist
 enum EnumPersonProperties {
-    name = "name",
-    bio = "bio"
+    NAME = "name",
+    BIO = "bio"
 }
 
 /**
@@ -88,7 +88,7 @@ function deleteById(id: number): void {
 
 /**
  * função que altera o valor da propriedade 'name' ou 'bio' do id passado
- * para alterar 'name': EnumPersonProperties.name. para alterar 'bio': EnumPersonProperties.bio
+ * para alterar 'name': EnumPersonProperties.NAME. para alterar 'bio': EnumPersonProperties.BIO
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
@@ -123,11 +123,11 @@ deleteById(3);
 console.log(getName(3));
 
 //alterando as propriedades do id 1
-console.log(updateById(1, EnumPersonProperties.name, 'igor gavilon'));
-console.log(updateById(1, EnumPersonProperties.bio, 'desenvolvedor de software'));
+console.log(updateById(1, EnumPersonProperties.NAME, 'igor gavilon'));
+console.log(updateById(1, EnumPersonProperties.BIO, 'desenvolvedor de software'));
 //tenta alterar um objeto com um id que não existe
 //resposta esperada: "Nenhum id encontrado."
-console.log(updateById(100, EnumPersonProperties.bio, 'alterando um id não existente'));
+console.log(updateById(100, EnumPersonProperties.BIO, 'alterando um id não existente'));
 
 //imprime a lista para verificar que os dados foram realmente alterados
 console.log(lista);

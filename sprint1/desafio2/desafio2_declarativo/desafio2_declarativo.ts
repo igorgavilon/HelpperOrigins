@@ -9,8 +9,8 @@ interface Scientist {
 
 //enum que contém as propriedades que podem ser alteradas no objeto Scientist
 enum EnumPersonProperties {
-    name = "name",
-    bio = "bio"
+    NAME = "name",
+    BIO = "bio"
 }
 
 /**
@@ -96,7 +96,7 @@ function deleteById(list: Array<Scientist>, id: number): Scientist[] {
 
 /**
  * função que altera o valor de uma propriedade selecionada por parâmetro
- * para alterar 'name': EnumPersonProperties.name. para alterar 'bio': EnumPersonProperties.bio
+ * para alterar 'name': EnumPersonProperties.NAME. para alterar 'bio': EnumPersonProperties.BIO
  * @param property enum type: nome da propriedade do objeto Scientist que se deseja alterar
  * @param newValue novo valor para a propriedade
  * @returns o atributo com o seu novo valor
@@ -105,7 +105,7 @@ const alterProperty = (property: EnumPersonProperties, newValue: string) => (ele
 
 /**
  * função que altera a propriedade "name" ou "bio" do objeto selecionado pelo id
- * para alterar 'name': EnumPersonProperties.name. para alterar 'bio': EnumPersonProperties.bio
+ * para alterar 'name': EnumPersonProperties.NAME. para alterar 'bio': EnumPersonProperties.BIO
  * @param list lista com os objetos Scientist
  * @param id id numérico do objeto que se deseja alterar
  * @param property nome da propriedade do objeto Scientist que se deseja alterar
@@ -135,8 +135,8 @@ console.log(deleteById(lista2, 3));
 console.log(getName(lista2, 30));
 
 //alterando as propriedades do id 1
-console.log(updateById(lista2, 1, EnumPersonProperties.name, 'Igor Gavilon'));
-console.log(updateById(lista2, 1, EnumPersonProperties.bio, 'Desenvolvedor de Software.'));
+console.log(updateById(lista2, 1, EnumPersonProperties.NAME, 'Igor Gavilon'));
+console.log(updateById(lista2, 1, EnumPersonProperties.BIO, 'Desenvolvedor de Software.'));
 
 //imprime a lista original para verificar que os dados não foram alterados
 console.log(lista2);

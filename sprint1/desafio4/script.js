@@ -15,6 +15,17 @@ var EnumPropriedadesPessoa;
     EnumPropriedadesPessoa["NOME"] = "name";
     EnumPropriedadesPessoa["BIO"] = "bio";
 })(EnumPropriedadesPessoa || (EnumPropriedadesPessoa = {}));
+//array com objeto de configuração para criar as ações de usuário na tabela
+var configuracoesAcoesUsuario = [
+    {
+        rotulo: "editar",
+        acao: "editarRegistro"
+    },
+    {
+        rotulo: "excluir",
+        acao: "removerRegistro"
+    }
+];
 /**
  * declaração do array de Objetos
  */
@@ -86,30 +97,27 @@ function gerarLinhasTabela(tabela, dados) {
             var texto = document.createTextNode(elemento[chave]);
             celula.appendChild(texto);
         }
-        gerarAcoesDeUsuario(linha, elemento);
+        gerarAcoesDeUsuario(linha, elemento, configuracoesAcoesUsuario);
     }
 }
 /**
  * função que adiciona dois links com ações que o usuário pode realizar: editar e excluir registro
  * @param linha linha atual da tabela
  * @param elemento objeto com os dados para preeencher a linha atual da tabela
+ * @param configuracoes array com objeto de configuração das ações de usuário
  */
-function gerarAcoesDeUsuario(linha, elemento) {
+function gerarAcoesDeUsuario(linha, elemento, configuracoes) {
     //inserir as ações editar e excluir
-    var celula = linha.insertCell();
-    var elemento_a = document.createElement('a');
-    var texto = document.createTextNode('editar');
-    elemento_a.appendChild(texto);
-    elemento_a.setAttribute("href", "#");
-    elemento_a.setAttribute("onClick", "editarRegistro(" + elemento.id + ")");
-    celula.appendChild(elemento_a);
-    var celula = linha.insertCell();
-    var elemento_a = document.createElement('a');
-    var texto = document.createTextNode('excluir');
-    elemento_a.appendChild(texto);
-    elemento_a.setAttribute("href", "#");
-    elemento_a.setAttribute("onClick", "removeRegistro(" + elemento.id + ")");
-    celula.appendChild(elemento_a);
+    for (var _i = 0, configuracoes_1 = configuracoes; _i < configuracoes_1.length; _i++) {
+        var configuracao = configuracoes_1[_i];
+        var celula = linha.insertCell();
+        var elemento_a = document.createElement('a');
+        var texto = document.createTextNode(configuracao.rotulo);
+        elemento_a.appendChild(texto);
+        elemento_a.setAttribute("href", "#");
+        elemento_a.setAttribute("onClick", configuracao.acao + "(" + elemento.id + ")");
+        celula.appendChild(elemento_a);
+    }
 }
 /**
  * função que monta a tabela em HTML a partir do Array Cientistas
@@ -148,7 +156,7 @@ var diferenteId = function (id) { return function (elemento) { return elemento.i
  * função que remove um dos registros da tabela
  * @param id id numérico do objeto Cientista que se deseja remover da tabela
  */
-function removeRegistro(id) {
+function removerRegistro(id) {
     //array que armazenará o resultado do filtro
     var listaResultado = [];
     //filtra o array e retira somente o objeto com o id passado
