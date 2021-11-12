@@ -6,8 +6,11 @@ var CientistaDestaque_1 = require("./CientistaDestaque");
  * classe fábrica de instâncias da classe Cientista
  */
 var CientistaFactory = /** @class */ (function () {
-    //construtor recebe um array do tipo ICientista
-    function CientistaFactory(cientista) {
+    function CientistaFactory() {
+    }
+    //função estática que instancia um objeto de uma das classes
+    //Cientista ou CientistaDestaque, conforme a lógica apresentada
+    CientistaFactory.criaNovoCientista = function (cientista) {
         //verifica se a cientista em questão é a Ada Lovelace
         if (cientista.name.includes("Ada Lovelace")) {
             //caso seja, instancia a classe CientistaDestaque que possui um atributo destaque
@@ -18,7 +21,7 @@ var CientistaFactory = /** @class */ (function () {
             //caso não seja, instancia uma classe Cientista, sem o atributo de destaque
             return new Cientista_1["default"](cientista.id, cientista.name, cientista.bio);
         }
-    }
+    };
     return CientistaFactory;
 }());
 exports["default"] = CientistaFactory;

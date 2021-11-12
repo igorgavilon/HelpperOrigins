@@ -20,7 +20,7 @@ for(let cientista of arrayCientistas) {
     //é instanciada a classe CientistaFactory passando como parâmetro um objeto do tipo Cientista
     //será retornado uma instância de uma das classes: Cientista ou CientistaDestaque
     //conforme verificação feita pela Factory
-    let instanciaGeradaPelaFactory: Cientista = new CientistaFactory(cientista);
+    let instanciaGeradaPelaFactory: Cientista = CientistaFactory.criaNovoCientista(cientista);
     //chama o método toString para mostrar nome, bio e atributo destaque, caso houver
     instanciaGeradaPelaFactory.toString();
 }

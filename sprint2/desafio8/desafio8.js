@@ -14,12 +14,13 @@ var arrayCientistas = [
     { id: 4, name: "Nicolau Copérnico",
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." }
 ];
+//enviando todos os objetos do arrayCientistas para a Factory
 for (var _i = 0, arrayCientistas_1 = arrayCientistas; _i < arrayCientistas_1.length; _i++) {
     var cientista = arrayCientistas_1[_i];
     //é instanciada a classe CientistaFactory passando como parâmetro um objeto do tipo Cientista
     //será retornado uma instância de uma das classes: Cientista ou CientistaDestaque
     //conforme verificação feita pela Factory
-    var instanciaGeradaPelaFactory = new CientistaFactory_1["default"](cientista);
+    var instanciaGeradaPelaFactory = CientistaFactory_1["default"].criaNovoCientista(cientista);
     //chama o método toString para mostrar nome, bio e atributo destaque, caso houver
     instanciaGeradaPelaFactory.toString();
 }
