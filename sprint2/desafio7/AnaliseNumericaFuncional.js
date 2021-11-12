@@ -30,14 +30,14 @@ var AnaliseNumericaFuncional = /** @class */ (function (_super) {
          * @param b segundo número
          * @returns number: o maior número
          */
-        _this.maximoValor = function (a, b) { return Math.max(a, b); };
+        _this.valorMaximoEntre = function (a, b) { return Math.max(a, b); };
         /**
          * função que retorna o valor mínimo entre dois números
          * @param a primeiro número
          * @param b segundo número
          * @returns number: o menor número
          */
-        _this.minimoValor = function (a, b) { return Math.min(a, b); };
+        _this.valorMinimoEntre = function (a, b) { return Math.min(a, b); };
         /**
          * função que retorna a soma do acumulador 'a' mais o valor de 'b' dividido pelo número total
          * de elemntos do array (lista.length)
@@ -47,8 +47,9 @@ var AnaliseNumericaFuncional = /** @class */ (function (_super) {
          * @param lista array que está sendo iterado
          * @returns number: soma dos valores
          */
-        _this.somaDosValores = function (a, b, indice, lista) { return a + (b / lista.length); };
+        _this.somaDosValores = function (a, b, indice, lista) { return a + (b / (lista.length || 1)); };
         _this.listaNumerica = lista;
+        _this.ehListaValida = _this.validaLista();
         return _this;
     }
     /**
@@ -63,27 +64,27 @@ var AnaliseNumericaFuncional = /** @class */ (function (_super) {
      * @returns number: valor máximo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaFuncional.prototype.calculaValorMaximo = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
-        return this.listaNumerica.reduce(this.maximoValor);
+        return this.listaNumerica.reduce(this.valorMaximoEntre);
     };
     /**
      * função que calcula o valor mínimo de um array numérico
      * @returns number: valor mínimo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaFuncional.prototype.calculaValorMinimo = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
-        return this.listaNumerica.reduce(this.minimoValor);
+        return this.listaNumerica.reduce(this.valorMinimoEntre);
     };
     /**
      * função que calcula o valor médio de um array numérico
      * @returns number: valor médio do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaFuncional.prototype.calculaValorMedio = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
         return this.listaNumerica.reduce(this.somaDosValores, 0);
@@ -94,14 +95,10 @@ var AnaliseNumericaFuncional = /** @class */ (function (_super) {
      *          mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaFuncional.prototype.realizaAnaliseCompleta = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
-        var valorMaximo, valorMinimo, valorMedio;
-        valorMaximo = this.calculaValorMaximo();
-        valorMinimo = this.calculaValorMinimo();
-        valorMedio = this.calculaValorMedio();
-        return [valorMaximo, valorMinimo, valorMedio];
+        return [this.calculaValorMaximo(), this.calculaValorMinimo(), this.calculaValorMedio()];
     };
     return AnaliseNumericaFuncional;
 }(AnaliseNumerica_1["default"]));

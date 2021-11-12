@@ -4,10 +4,11 @@
  */
 export default abstract class AnaliseNumerica {
     protected listaNumerica: Array<number | any>;
+    protected ehListaValida: boolean;
 
     protected abstract validaLista(): boolean;
-    abstract calculaValorMaximo(): number | string;
-    abstract calculaValorMinimo(): number | string;
-    abstract calculaValorMedio(): number | string;
-    abstract realizaAnaliseCompleta(): Array<number> | string;
+    public abstract calculaValorMaximo(): number | string;
+    public abstract calculaValorMinimo(): number | string;
+    public abstract calculaValorMedio(): number | string;
+    public abstract realizaAnaliseCompleta(): Array<number> | string;
 }

@@ -9,6 +9,7 @@ export default class AnaliseNumericaImperativa extends AnaliseNumerica{
     constructor(lista: Array<number | any>) {
         super();
         this.listaNumerica = lista;
+        this.ehListaValida = this.validaLista();
     }
 
     /**
@@ -19,9 +20,8 @@ export default class AnaliseNumericaImperativa extends AnaliseNumerica{
         if(this.listaNumerica.length == 0) {
             return false;
         }
-
-        for(let indice = 0; indice < this.listaNumerica.length; indice++) {
-            if (typeof(this.listaNumerica[indice]) !== 'number') {
+        for(let item of this.listaNumerica) {
+            if(typeof(item) !== 'number') {
                 return false;
             }
         }
@@ -33,13 +33,12 @@ export default class AnaliseNumericaImperativa extends AnaliseNumerica{
      * @returns number: valor máximo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public calculaValorMaximo(): number | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
         let valorMaximo: number;
         valorMaximo = this.listaNumerica[0];
-        for(let indice = 1; indice < this.listaNumerica.length; indice++) {
-            let valorAtual: number = this.listaNumerica[indice];
+        for(let valorAtual of this.listaNumerica) {
             if(valorAtual > valorMaximo) {
                 valorMaximo = valorAtual;
             }
@@ -52,13 +51,12 @@ export default class AnaliseNumericaImperativa extends AnaliseNumerica{
      * @returns number: valor mínimo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public calculaValorMinimo(): number | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
         let valorMinimo: number;
         valorMinimo = this.listaNumerica[0];
-        for(let indice = 1; indice < this.listaNumerica.length; indice++) {
-            let valorAtual: number = this.listaNumerica[indice];
+        for(let valorAtual of this.listaNumerica) {
             if(valorAtual < valorMinimo) {
                 valorMinimo = valorAtual;
             }
@@ -71,16 +69,14 @@ export default class AnaliseNumericaImperativa extends AnaliseNumerica{
      * @returns number: valor médio do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public calculaValorMedio(): number | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
-        let soma, valorMedio: number;
-        for(let indice = 0; indice < this.listaNumerica.length; indice++) {
-            let valorAtual: number = this.listaNumerica[indice];
+        let soma: number;
+        for(let valorAtual of this.listaNumerica) {
             soma += valorAtual;
         }
-        valorMedio = soma/this.listaNumerica.length;
-        return valorMedio;
+        return (soma/(this.listaNumerica.length || 1));
     }
 
     /**
@@ -89,14 +85,10 @@ export default class AnaliseNumericaImperativa extends AnaliseNumerica{
      *          mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public realizaAnaliseCompleta(): Array<number> | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
-        let valorMaximo, valorMinimo, valorMedio: number;
-        valorMaximo = this.calculaValorMaximo();
-        valorMinimo = this.calculaValorMinimo();
-        valorMedio = this.calculaValorMedio();
         
-        return [valorMaximo, valorMinimo, valorMedio];
+        return [this.calculaValorMaximo(), this.calculaValorMinimo(), this.calculaValorMedio()];
     }
 }

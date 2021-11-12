@@ -9,6 +9,7 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
     constructor(lista: Array<number | any>) {
         super();
         this.listaNumerica = lista;
+        this.ehListaValida = this.validaLista();
     }
 
     /**
@@ -25,7 +26,7 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
      * @param b segundo número
      * @returns number: o maior número
      */
-    private maximoValor = (a: number, b: number) => Math.max(a, b);
+    private valorMaximoEntre = (a: number, b: number) => Math.max(a, b);
 
     /**
      * função que retorna o valor mínimo entre dois números
@@ -33,7 +34,7 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
      * @param b segundo número
      * @returns number: o menor número
      */
-    private minimoValor = (a: number, b: number) => Math.min(a, b);
+    private valorMinimoEntre = (a: number, b: number) => Math.min(a, b);
 
     /**
      * função que retorna a soma do acumulador 'a' mais o valor de 'b' dividido pelo número total
@@ -44,17 +45,17 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
      * @param lista array que está sendo iterado
      * @returns number: soma dos valores
      */
-    private somaDosValores = (a: number, b: number, indice: number, lista: number[]) => a + (b/lista.length);
+    private somaDosValores = (a: number, b: number, indice: number, lista: number[]) => a + (b/(lista.length || 1));
     
     /**
      * função que calcula o valor máximo de um array numérico
      * @returns number: valor máximo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public calculaValorMaximo(): number | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
-        return this.listaNumerica.reduce(this.maximoValor);
+        return this.listaNumerica.reduce(this.valorMaximoEntre);
     }
 
     /**
@@ -62,10 +63,10 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
      * @returns number: valor mínimo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public calculaValorMinimo(): number | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
-        return this.listaNumerica.reduce(this.minimoValor);
+        return this.listaNumerica.reduce(this.valorMinimoEntre);
     }
     
     /**
@@ -73,7 +74,7 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
      * @returns number: valor médio do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public calculaValorMedio(): number | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
         return this.listaNumerica.reduce(this.somaDosValores, 0);
@@ -85,15 +86,11 @@ export default class AnaliseNumericaFuncional extends AnaliseNumerica{
      *          mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     public realizaAnaliseCompleta(): number[] | string {
-        if(!this.validaLista()) {
+        if(!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.'
         }
-        let valorMaximo, valorMinimo, valorMedio: number;
-        valorMaximo = this.calculaValorMaximo();
-        valorMinimo = this.calculaValorMinimo();
-        valorMedio = this.calculaValorMedio();
         
-        return [valorMaximo, valorMinimo, valorMedio];
+        return [this.calculaValorMaximo(), this.calculaValorMinimo(), this.calculaValorMedio()];
     }
 
 }

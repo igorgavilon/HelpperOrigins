@@ -25,6 +25,7 @@ var AnaliseNumericaImperativa = /** @class */ (function (_super) {
     function AnaliseNumericaImperativa(lista) {
         var _this = _super.call(this) || this;
         _this.listaNumerica = lista;
+        _this.ehListaValida = _this.validaLista();
         return _this;
     }
     /**
@@ -35,8 +36,9 @@ var AnaliseNumericaImperativa = /** @class */ (function (_super) {
         if (this.listaNumerica.length == 0) {
             return false;
         }
-        for (var indice = 0; indice < this.listaNumerica.length; indice++) {
-            if (typeof (this.listaNumerica[indice]) !== 'number') {
+        for (var _i = 0, _a = this.listaNumerica; _i < _a.length; _i++) {
+            var item = _a[_i];
+            if (typeof (item) !== 'number') {
                 return false;
             }
         }
@@ -47,13 +49,13 @@ var AnaliseNumericaImperativa = /** @class */ (function (_super) {
      * @returns number: valor máximo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaImperativa.prototype.calculaValorMaximo = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
         var valorMaximo;
         valorMaximo = this.listaNumerica[0];
-        for (var indice = 1; indice < this.listaNumerica.length; indice++) {
-            var valorAtual = this.listaNumerica[indice];
+        for (var _i = 0, _a = this.listaNumerica; _i < _a.length; _i++) {
+            var valorAtual = _a[_i];
             if (valorAtual > valorMaximo) {
                 valorMaximo = valorAtual;
             }
@@ -65,13 +67,13 @@ var AnaliseNumericaImperativa = /** @class */ (function (_super) {
      * @returns number: valor mínimo do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaImperativa.prototype.calculaValorMinimo = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
         var valorMinimo;
         valorMinimo = this.listaNumerica[0];
-        for (var indice = 1; indice < this.listaNumerica.length; indice++) {
-            var valorAtual = this.listaNumerica[indice];
+        for (var _i = 0, _a = this.listaNumerica; _i < _a.length; _i++) {
+            var valorAtual = _a[_i];
             if (valorAtual < valorMinimo) {
                 valorMinimo = valorAtual;
             }
@@ -83,16 +85,15 @@ var AnaliseNumericaImperativa = /** @class */ (function (_super) {
      * @returns number: valor médio do array ou mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaImperativa.prototype.calculaValorMedio = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
-        var soma, valorMedio;
-        for (var indice = 0; indice < this.listaNumerica.length; indice++) {
-            var valorAtual = this.listaNumerica[indice];
+        var soma;
+        for (var _i = 0, _a = this.listaNumerica; _i < _a.length; _i++) {
+            var valorAtual = _a[_i];
             soma += valorAtual;
         }
-        valorMedio = soma / this.listaNumerica.length;
-        return valorMedio;
+        return (soma / (this.listaNumerica.length || 1));
     };
     /**
      * função que calcula os valores máximo, mínimo e médio de um array numérico
@@ -100,14 +101,10 @@ var AnaliseNumericaImperativa = /** @class */ (function (_super) {
      *          mensagem: 'O Array deve ser numérico e não ser vazio.'
      */
     AnaliseNumericaImperativa.prototype.realizaAnaliseCompleta = function () {
-        if (!this.validaLista()) {
+        if (!this.ehListaValida) {
             return 'O Array deve ser numérico e não ser vazio.';
         }
-        var valorMaximo, valorMinimo, valorMedio;
-        valorMaximo = this.calculaValorMaximo();
-        valorMinimo = this.calculaValorMinimo();
-        valorMedio = this.calculaValorMedio();
-        return [valorMaximo, valorMinimo, valorMedio];
+        return [this.calculaValorMaximo(), this.calculaValorMinimo(), this.calculaValorMedio()];
     };
     return AnaliseNumericaImperativa;
 }(AnaliseNumerica_1["default"]));
