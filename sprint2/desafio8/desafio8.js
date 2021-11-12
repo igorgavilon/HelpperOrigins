@@ -14,6 +14,12 @@ var arrayCientistas = [
     { id: 4, name: "Nicolau Copérnico",
         bio: "Nicolau Copérnico foi um astrônomo e matemático polonês que desenvolveu a teoria heliocêntrica do Sistema Solar." }
 ];
-//é instanciada a classe CientistaFactory passando como parâmetro um array de Cientistas
-//isso faz com que seja impresso no console o nome e bio de cada objeto do array
-new CientistaFactory_1["default"](arrayCientistas);
+for (var _i = 0, arrayCientistas_1 = arrayCientistas; _i < arrayCientistas_1.length; _i++) {
+    var cientista = arrayCientistas_1[_i];
+    //é instanciada a classe CientistaFactory passando como parâmetro um objeto do tipo Cientista
+    //será retornado uma instância de uma das classes: Cientista ou CientistaDestaque
+    //conforme verificação feita pela Factory
+    var instanciaGeradaPelaFactory = new CientistaFactory_1["default"](cientista);
+    //chama o método toString para mostrar nome, bio e atributo destaque, caso houver
+    instanciaGeradaPelaFactory.toString();
+}

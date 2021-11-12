@@ -22,16 +22,16 @@ var Cientista_1 = require("./Cientista");
  */
 var CientistaDestaque = /** @class */ (function (_super) {
     __extends(CientistaDestaque, _super);
-    function CientistaDestaque(id, nome, bio) {
-        var _this = _super.call(this, id, nome, bio) || this;
-        _this.destaque = "Esta cientista criou a linguagem de programação Ada.";
+    function CientistaDestaque(id, name, bio, destaque) {
+        var _this = _super.call(this, id, name, bio) || this;
+        _this.destaque = destaque;
         return _this;
     }
     /**
      * método que imprime no console o nome, a bio e a característica de destaque de uma instância da classe CientistaDestaque
      */
     CientistaDestaque.prototype.toString = function () {
-        console.log("\nNome: " + this.nome + " \nBio: " + this.bio + " \n>>>>>Destaque: " + this.destaque + "<<<<<");
+        console.log("\nNome: " + this.name + " \nBio: " + this.bio + " \n>>>>>Destaque: " + this.destaque + "<<<<<");
     };
     return CientistaDestaque;
 }(Cientista_1["default"]));

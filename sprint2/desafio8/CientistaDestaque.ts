@@ -8,16 +8,16 @@ export default class CientistaDestaque extends Cientista {
     //atributo de destaque
     private destaque: string;
 
-    constructor(id: number, nome: string, bio: string) {
-        super(id, nome, bio);
-        this.destaque = "Esta cientista criou a linguagem de programação Ada."
+    constructor(id: number, name: string, bio: string, destaque: string) {
+        super(id, name, bio);
+        this.destaque = destaque;
     }
 
     /**
      * método que imprime no console o nome, a bio e a característica de destaque de uma instância da classe CientistaDestaque
      */
     public override toString(): void {
-        console.log(`\nNome: ${this.nome} \nBio: ${this.bio} \n>>>>>Destaque: ${this.destaque}<<<<<`);
+        console.log(`\nNome: ${this.name} \nBio: ${this.bio} \n>>>>>Destaque: ${this.destaque}<<<<<`);
     }
     
 }
